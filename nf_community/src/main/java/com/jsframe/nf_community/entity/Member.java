@@ -9,9 +9,6 @@ import javax.persistence.*;
 @Data
 public class Member {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long mno;
-
     @Id
     @Column(nullable = false, length = 45)
     private String mid;
