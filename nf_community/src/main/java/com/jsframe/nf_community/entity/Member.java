@@ -8,12 +8,14 @@ import javax.persistence.*;
 @Table(name = "membertbl")
 @Data
 public class Member {
-
     @Id
-    @Column(nullable = false, length = 45)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long mno;
+
+    @Column(unique = true, nullable = false, length = 45)
     private String mid;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false, length = 200)
     private String mpw;
 
     @Column(nullable = false, length = 45)
