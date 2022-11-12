@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+<div>
+    <form th:action="@{joinProc}" method="post">
+        <h2>회원가입</h2>
+        <input type="text" name="mid" autofocus placeholder="아이디" required>
+        <input type="password" name="mpw" placeholder="비밀번호" required>
+        <input type="text" name="mname" placeholder="이름" required>
+        <input type="text" name="mphone" placeholder="연락처">
+
+        <div>
+            <input type="submit" value="가입" id="joinbtn">
+        </div>
+    </form>
+</div>
+
+</body>
+<script th:inline="javascript">
+    let m = [[${msg}]];
+    if(m != null){
+        alert(m);
+    }
+</script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+<div>
+    <form th:action="@{loginProc}" method="post">
+        <h2>로그인</h2>
+        <input type="text" name="mid" autofocus placeholder="아이디" required>
+        <input type="password" name="mpw" placeholder="비밀번호" required>
+
+        <div>
+            <input type="submit" value="로그인" id="loginbtn">
+        </div>
+    </form>
+</div>
+
+</body>
+<script th:inline="javascript">
+    let m = [[${msg}]];
+    if(m != null){
+        alert(m);
+    }
+</script>
+</html>
