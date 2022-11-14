@@ -47,6 +47,12 @@ public class MemberController {
         return view;
     }
 
+    @GetMapping("login")
+    public String login(){
+        log.info("login()");
+        return "login";
+    }
+
     @PostMapping("/member/login")
     @ResponseBody
     public boolean login(Member member, HttpSession session) {

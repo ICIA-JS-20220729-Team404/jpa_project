@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>로그인</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
+
+  <style>
+    .modal {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      display: none;
+
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal.show {
+      display: block;
+    }
+
+    .modal_body {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: 400px;
+      height: 600px;
+
+      padding: 40px;
+
+      text-align: center;
+
+      background-color: rgb(255, 255, 255);
+      border-radius: 10px;
+      box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+      transform: translateX(-50%) translateY(-50%);
+    }
+  </style>
+</head>
+
+<body>
+<div class="modal">
+  <div class="modal_body">
+      <form id="joinFrm" th:action="@{joinProc}" method="post">
+          <h2>회원가입</h2>
+          <input type="text" name="mid" autofocus placeholder="아이디" required>
+          <input type="password" name="mpw" placeholder="비밀번호" required>
+          <input type="text" name="mname" placeholder="이름" required>
+          <input type="text" name="mphone" placeholder="연락처">
+
+          <button id="joinbtn">회원가입</button>
+      </form>
+  </div>
+</div>
+
+<script th:inline="javascript">
+  let m = [[${msg}]];
+  if(m != null){
+    alert(m);
+  };
+
+  $("#joinbtn").click(function (){
+      // form 데이터를 가져와 직렬화 한 후 전송
+      const formData = $("#joinFrm").serialize();
+      console.log(formData);
+
+      $.ajax({
+          url : "joinProc",
+          type : "post",
+          data : formData,
+
+          success : function (result){
+              alert(result);
+          },
+          error : function (error){
+              alert("전송 실패");
+              console.log(error);
+          }
+      })
+  });
+
+  const body = document.querySelector('body');
+  const modal = document.querySelector('.modal');
+  const btnOpenPopup = document.querySelector('.btn-open-popup');
+
+  btnOpenPopup.addEventListener('click', () => {
+    modal.classList.toggle('show');
+
+    if (modal.classList.contains('show')) {
+      body.style.overflow = 'hidden';
+    }
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.classList.toggle('show');
+
+      if (!modal.classList.contains('show')) {
+        body.style.overflow = 'auto';
+      }
+    }
+  });
+</script>
+</body>
+</html>

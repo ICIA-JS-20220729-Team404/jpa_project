@@ -1,88 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./common.css" />
-    <link rel="stylesheet" href="./login.css" />
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-        const $ = (selector) => document.querySelector(selector);
-        const confettiRun = () => {
-            const duration = 5 * 1000;
-            const animationEnd = Date.now() + duration;
-            let skew = 1;
-            const colors = [
-                "#26ccff",
-                "#a25afd",
-                "#ff5e7e",
-                "#88ff5a",
-                "#fcff42",
-                "#ffa62d",
-                "#ff36ff",
-            ];
+  <meta charset="UTF-8" />
+  <title>로그인</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+          crossorigin="anonymous"></script>
+    <style>
+        .modal {
+            position: absolute;
+            top: 0;
+            left: 0;
 
-            const randomInRange = (min, max) => Math.random() * (max - min) + min;
+            width: 100%;
+            height: 100%;
 
-            (function frame() {
-                const timeLeft = animationEnd - Date.now();
-                const ticks = Math.max(200, 500 * (timeLeft / duration));
-                skew = Math.max(0.8, skew - 0.001);
+            display: none;
 
-                confetti({
-                    particleCount: 1,
-                    startVelocity: 0,
-                    ticks: ticks,
-                    origin: {
-                        x: Math.random(),
-                        // since particles fall down, skew start toward the top
-                        y: Math.random() * skew - 0.2,
-                    },
-                    colors: [colors[Math.floor(Math.random() * colors.length)]],
-                    shapes: ["circle"],
-                    gravity: randomInRange(0.4, 0.6),
-                    scalar: randomInRange(0.4, 1),
-                    drift: randomInRange(-0.4, 0.4),
-                });
+            background-color: rgba(0, 0, 0, 0.4);
+        }
 
-                if (timeLeft > 0) {
-                    confettiTimer = requestAnimationFrame(frame);
-                }
-            })();
-        };
+        .modal.show {
+            display: block;
+        }
 
-        window.onload = () => {
-            $(".login-form").addEventListener("submit", (e) => {
-                e.preventDefault();
+        .modal_body {
+            position: absolute;
+            top: 50%;
+            left: 50%;
 
-                $(".modal--wrapper").classList.add("active");
-                confettiRun();
-            });
-        };
-    </script>
+            width: 400px;
+            height: 600px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
 </head>
+
 <body>
-<div class="modal--wrapper">
-    <div class="modal">
-        <h3>OOO님 환영합니다!</h3>
-        <p>안녕하세요, 다시 와 주셔서 감사해요!</p>
+<div class="modal">
+    <div class="modal_body">
+        <h3>로그인</h3>
+    <form id="loginFrm">
+        <input id="inputid" type="text" name="mid" autofocus placeholder="아이디" required>
+        <br>
+        <input id="inputpw" type="password" name="mpw" placeholder="비밀번호" required>
+        <br>
+        <button type="button" id="loginbtn">로그인</button>
+    </form>
     </div>
 </div>
-<div class="login-app">
-    <div class="login-box">
-        <h2 class="login-title">Sign In</h2>
-        <form action="" method="post" class="login-form">
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button type="submit" class="signin">Sign in</button>
-        </form>
-    </div>
-    <div class="login-banner">
-        <p class="login-banner--title">Welcome to this site!</p>
-        <p class="login-banner--description">some text blah like fish ha :)</p>
-    </div>
-</div>
+<button class="btn-open-popup">login</button>
 </body>
+
+<script th:inline="javascript">
+  const body = document.querySelector('body');
+  const modal = document.querySelector('.modal');
+  const btnOpenPopup = document.querySelector('.btn-open-popup');
+
+  btnOpenPopup.addEventListener('click', () => {
+    modal.classList.toggle('show');
+
+    if (modal.classList.contains('show')) {
+      body.style.overflow = 'hidden';
+    }
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.classList.toggle('show');
+
+      if (!modal.classList.contains('show')) {
+        body.style.overflow = 'auto';
+      }
+    }
+  });
+
+
+  $("#loginbtn").click(function (){
+      // form 데이터를 가져와 직렬화 한 후 전송
+      const formData = $("#loginFrm").serialize();
+      console.log(formData);
+
+      $.ajax({
+          url : "/member/login",
+          type : "POST",
+          data : formData,
+          success : function (result){
+              alert(result);
+          },
+          error : function (error){
+              alert("전송 실패");
+              console.log(error);
+          }
+      })
+  });
+
+</script>
 </html>
