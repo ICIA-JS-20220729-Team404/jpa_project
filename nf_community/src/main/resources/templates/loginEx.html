@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./login.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        const $ = (selector) => document.querySelector(selector);
+        const confettiRun = () => {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            let skew = 1;
+            const colors = [
+                "#26ccff",
+                "#a25afd",
+                "#ff5e7e",
+                "#88ff5a",
+                "#fcff42",
+                "#ffa62d",
+                "#ff36ff",
+            ];
+
+            const randomInRange = (min, max) => Math.random() * (max - min) + min;
+
+            (function frame() {
+                const timeLeft = animationEnd - Date.now();
+                const ticks = Math.max(200, 500 * (timeLeft / duration));
+                skew = Math.max(0.8, skew - 0.001);
+
+                confetti({
+                    particleCount: 1,
+                    startVelocity: 0,
+                    ticks: ticks,
+                    origin: {
+                        x: Math.random(),
+                        // since particles fall down, skew start toward the top
+                        y: Math.random() * skew - 0.2,
+                    },
+                    colors: [colors[Math.floor(Math.random() * colors.length)]],
+                    shapes: ["circle"],
+                    gravity: randomInRange(0.4, 0.6),
+                    scalar: randomInRange(0.4, 1),
+                    drift: randomInRange(-0.4, 0.4),
+                });
+
+                if (timeLeft > 0) {
+                    confettiTimer = requestAnimationFrame(frame);
+                }
+            })();
+        };
+
+        window.onload = () => {
+            $(".login-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                $(".modal--wrapper").classList.add("active");
+                confettiRun();
+            });
+        };
+    </script>
+</head>
+<body>
+<div class="modal--wrapper">
+    <div class="modal">
+        <h3>OOO님 환영합니다!</h3>
+        <p>안녕하세요, 다시 와 주셔서 감사해요!</p>
+    </div>
+</div>
+<div class="login-app">
+    <div class="login-box">
+        <h2 class="login-title">Sign In</h2>
+        <form action="" method="post" class="login-form">
+            <input type="text" placeholder="Username" />
+            <input type="password" placeholder="Password" />
+            <button type="submit" class="signin">Sign in</button>
+        </form>
+    </div>
+    <div class="login-banner">
+        <p class="login-banner--title">Welcome to this site!</p>
+        <p class="login-banner--description">some text blah like fish ha :)</p>
+    </div>
+</div>
+</body>
+</html>
