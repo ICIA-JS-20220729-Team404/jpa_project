@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Board - Write</title>
+    <style>
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script th:inline="javascript">
+        $(function () {
+            let m = [[${msg}]];
+            if (m != null) {
+                alert(m);
+            }
+            //파일 업로드 시 선택한 파일명 출력
+            $("#file").on("change", function () {
+                //파일 입력창(input type=file)에서 파일 목록 가져오기
+                let files = $("#file")[0].files;
+                console.log(files);
+
+                let fileName = "";
+
+                if (files.length > 1) {//하나 이상의 파일을 선택했을 경우
+                    fileName = files[0].name + " 외 "
+                        + (files.length - 1) + "개";
+                } else if (files.length == 1) {
+                    fileName = files[0].name;
+                } else {//파일 선택 창에서 '취소' 버튼을 클릭
+                    fileName = "파일선택";
+                }
+
+                $(".upload-name").val(fileName);
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="content">
+    <form th:action="@{writeProc}" method="post" class="form_class" enctype="multipart/form-data">
+        <h2> 게시판 </h2>
+        <div class="allView">
+<!--            <div>-->
+<!--                <select class="write-input">-->
+<!--                    <option value="attendance">출석체크</option>-->
+<!--                    <option value="study">수업내용</option>-->
+<!--                    <option value="complain">건의사항</option>-->
+<!--                    <option value="notice">공지사항</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <input type="text" class="write-input" name="bid"-->
+<!--                       autofocus placeholder="아이디" required>-->
+<!--            </div>-->
+            <div>
+                <input type="text" class="write-input" name="btitle"
+                        placeholder="제목" required>
+            </div>
+            <div>
+                    <textarea rows="15" name="bcontent"
+                              placeholder="글내용을 작성하세요." class="write-input ta"></textarea>
+            </div>
+            <div>
+                <div class="filebox">
+                    <label for="file">업로드</label>
+                    <input type="file" name="files" id="file" multiple>
+                    <input type="text" class="upload-name" value="파일선택" readonly>
+                </div>
+            </div>
+            <div class="btn-area">
+                <input type="submit" class="btn-write" value="전송">
+                <input type="reset" class="btn-write" value="리셋">
+                <input type="button" class="btn-write" value="뒤로가기" id="backbtn">
+            </div>
+
+        </div>
+
+    </form>
+</div>
+</body>
+<script th:inline="javascript">
+    $("#backbtn").click(function () {
+        location.href = "/?pageNum=" + [[${session.pageNum}]];
+
+    })
+</script>
+</html>
