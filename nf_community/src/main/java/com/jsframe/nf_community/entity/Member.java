@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "membertbl")
 @Data
 public class Member {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long mno;
 

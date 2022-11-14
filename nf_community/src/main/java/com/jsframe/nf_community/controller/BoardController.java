@@ -26,13 +26,13 @@ public class BoardController {
 
     @GetMapping("/board/testList")
     @ResponseBody
-    public List<Board> GetListTest(Integer pageNum, HttpSession session) {
+    public List<Board> getListTest(Integer pageNum, HttpSession session) {
         List<Board> list = bServ.getBoardList(pageNum, session);
         return list;
     }
 
     @GetMapping("/board/list")
-    public List<Board> GetList(Integer pageNum, HttpSession session) {
+    public List<Board> getList(Integer pageNum, HttpSession session) {
         mv = new ModelAndView();
         List<Board> list = bServ.getBoardList(pageNum, session);
         return list;
