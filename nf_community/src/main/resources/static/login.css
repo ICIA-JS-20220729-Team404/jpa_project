@@ -1,0 +1,105 @@
+.login-app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: #222;
+}
+
+.login-box {
+    width: 400px;
+    height: 100%;
+    background: #fff;
+    padding: 100px 30px 0;
+}
+
+.login-title {
+    font-size: 36px;
+    margin-bottom: 50px;
+}
+
+.login-title::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 6px;
+    background: #000;
+}
+
+.login-form > * {
+    display: block;
+}
+
+.login-form input {
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+.login-banner {
+    width: 80vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-banner--title {
+    font-size: 3vw;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-banner--description {
+    font-size: 1.5vw;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal--wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal--wrapper:not(.active) {
+    display: none;
+}
+
+.modal {
+    width: 400px;
+    height: 200px;
+    padding-top: 50px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 20, 0.05);
+    text-align: center;
+    animation: popin 0.5s;
+}
+
+.modal p {
+    color: rgba(0, 0, 0, 0.8);
+    margin-top: 15px;
+}
+
+@keyframes popin {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

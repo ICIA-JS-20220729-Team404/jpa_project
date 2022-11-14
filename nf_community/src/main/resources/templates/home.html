@@ -1,16 +1,274 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./common.css" />
+    <link rel="stylesheet" href="./home.css" />
+    <script>
+        const $ = (selector) => document.querySelector(selector);
+        window.onload = () => {
+            const $header = $("header");
+            window.addEventListener("scroll", (e) => {
+                if (window.scrollY > 300 && $header.classList.contains("active"))
+                    return;
+                $header.classList[window.scrollY > 200 ? "add" : "remove"]("active");
+            });
+        };
+    </script>
 </head>
 <body>
-<button type="button">버튼</button>
+<header>
+    <div class="app-header">
+        <div class="app-header--main">
+            <h1 class="logo">Logo</h1>
+            <nav>
+                <ul class="gnb">
+                    <li>Home</li>
+                    <li>Contact</li>
+                    <li>Services</li>
+                    <li>Etc</li>
+                </ul>
+            </nav>
+        </div>
+        <div class="app-header--utils">
+            <!-- <input type="text" placeholder="Input Something..." /> -->
+            <a href="login.html"><button class="btn signin">Sign In</button></a>
+            <a href="#">Are you not member yet?</a>
+        </div>
+    </div>
+</header>
+<section class="main-banner">
+    <p class="main-banner--title">Oops O_o; 404 Not Found.</p>
+    <p class="main-banner--description">
+        This section is main banner's description, Please input any text.
+    </p>
+</section>
+<section class="content">
+    <h2 class="content--title">First Section</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td class="left">titles les more can do it</td>
+            <td>manme</td>
+            <td>8 Hour before</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>Flandre</td>
+            <td>1 Days before</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td class="left">titles les more can do it</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<section class="content second">
+    <h2 class="content--title">Second Section</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td class="left">titles les more can do it</td>
+            <td>manme</td>
+            <td>8 Hour before</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>Flandre</td>
+            <td>1 Days before</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td class="left">titles les more can do it</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<section class="content">
+    <h2 class="content--title">Third Section</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td class="left">titles les more can do it</td>
+            <td>manme</td>
+            <td>8 Hour before</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>Flandre</td>
+            <td>1 Days before</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td class="left">titles les more can do it</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<section class="content second">
+    <h2 class="content--title">Forth Section</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td class="left">titles les more can do it</td>
+            <td>manme</td>
+            <td>8 Hour before</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td class="left">Some board title, can write it!</td>
+            <td>Flandre</td>
+            <td>1 Days before</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td class="left">Another Title. some body help me! Help!</td>
+            <td>David</td>
+            <td>1 Hour before</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td class="left">titles les more can do it</td>
+            <td>asdf</td>
+            <td>6 Hour before</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<footer>
+    <ul class="footer-nav">
+        <li>Daily Check</li>
+        <li>FAQs</li>
+        <li>Time Study</li>
+        <li>About us</li>
+        <li>Contact us</li>
+    </ul>
+    <div class="footer-info">
+        <p>
+            Professor Lee. Room number 404. Incheon LeeSangDong 403-25.
+            032-142-2535
+        </p>
+        <p>
+            Team Member, Yuli - yuli@naver.com.<br />
+            Somebody - everyone@naver.com<br />
+            Whoo? - whooareyou@naver.com
+        </p>
+    </div>
+</footer>
 </body>
-<script>
-    $("button").click(function(){
-        location.href = "writeFrm";
-    })
-</script>
 </html>
