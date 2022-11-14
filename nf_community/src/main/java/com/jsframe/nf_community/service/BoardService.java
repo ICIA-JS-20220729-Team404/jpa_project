@@ -1,7 +1,9 @@
 package com.jsframe.nf_community.service;
 
 import com.jsframe.nf_community.entity.Board;
+import com.jsframe.nf_community.entity.BoardFile;
 import com.jsframe.nf_community.entity.Member;
+import com.jsframe.nf_community.repository.BoardFileRepository;
 import com.jsframe.nf_community.repository.BoardRepository;
 import com.jsframe.nf_community.repository.MemberRepository;
 import lombok.extern.java.Log;
@@ -28,7 +30,11 @@ public class BoardService {
     private BoardRepository bRepo;
 
     @Autowired
+    private BoardFileRepository bfRepo;
+
+    @Autowired
     private MemberRepository mRepo;
+
 
     private ModelAndView mv;
 
@@ -41,11 +47,15 @@ public class BoardService {
         String msg = null;
         String view = null;
         try {
-            Member member = (Member)session.getAttribute("mem");
+            Member member = (Member) session.getAttribute("mem");
             member.getMid();
             board.setBid(member);
             bRepo.save(board);
             log.info("bno : " + board.getBno());
+
+            //파일 업로드를 위한 메소드
+            fileUpLoad(files, session, board);
+
             msg = "저장 성공";
             view = "redirect:/";
 
@@ -57,6 +67,39 @@ public class BoardService {
         rttr.addFlashAttribute("msg", msg);
 
         return view;
+    }
+
+    private void fileUpLoad(List<MultipartFile> files, HttpSession session, Board board)
+            throws Exception{
+        log.info("fileUpLoad()");
+        String realPath = session.getServletContext().getRealPath("/");
+        log.info("realPath : " + realPath);
+        realPath += "upload/";
+        File folder = new File(realPath);
+        if(folder.isDirectory() == false){
+            folder.mkdir();
+        }
+        for(MultipartFile mf : files){
+            String orname = mf.getOriginalFilename();
+            if(orname.equals("")){
+                return;
+            }
+
+            // upload 폴더에 File 저장
+            BoardFile bf = new BoardFile();
+            bf.setBfbid(board);
+            bf.setBforiname(orname);
+            String sysname = System.currentTimeMillis()
+                    + orname.substring(orname.lastIndexOf("."));
+            bf.setBfsysname(sysname);
+
+            File file = new File(realPath + sysname);
+            mf.transferTo(file);
+
+            // DB 에 File 정보를 저장
+            bfRepo.save(bf);
+        }
+
     }
 
     public List<Board> getBoardList(Integer pageNum, HttpSession session) {
@@ -74,4 +117,5 @@ public class BoardService {
 
         return boardList;
     }
+
 }

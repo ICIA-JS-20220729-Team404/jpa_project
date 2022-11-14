@@ -1,0 +1,58 @@
+@@ -0,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>update</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+</head>
+<body>
+<div class="content">
+  <form th:action="@{updateProc}" method="post" class="form_class" enctype="multipart/form-data">
+    <h2> 게시판 수정 </h2>
+    <th:block th:object="${board}">
+      <div class="allView">
+        <div>
+          <input type="hidden" name="bno" th:value="*{bno}">
+        </div>
+        <div>
+          <input type="text" class="write-input" name="btitle" th:value="*{btitle}"
+                 placeholder="제목" required>
+        </div>
+        <div>
+                    <textarea rows="15" name="bcontent" th:value="*{bcontent}"
+                              placeholder="글내용을 작성하세요." class="write-input ta"></textarea>
+        </div>
+        <div class="filebox">
+          <div class="d_content file_h" style="overflow: auto; width: 100%">
+            <th:block th:if="${#lists.isEmpty(bfList)}">
+              첨부된 파일이 없습니다.
+            </th:block>
+            <th:block th:unless="${#lists.isEmpty(bfList)}">
+              <th:block th:each="bf:${bfList}">
+                <span class="file-title" th:text="${bf.bforiname}"></span>
+              </th:block>
+            </th:block>
+          </div>
+          <!-- 파일 입력 처리 영역 -->
+          <label for="file">업로드</label>
+          <input type="file" name="files" id="file"
+                 multiple>
+          <input type="text" class="upload-name"
+                 value="파일선택" readonly>
+        </div>
+        <div class="btn-area">
+          <input type="submit" class="btn-write" value="U">
+          <input type="reset" class="btn-write" value="R">
+          <input type="button" class="btn-write" value="B" id="backbtn">
+        </div>
+
+      </div>
+    </th:block>
+
+  </form>
+</div>
+
+</body>
+</html>
