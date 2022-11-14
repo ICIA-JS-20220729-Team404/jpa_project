@@ -2,6 +2,7 @@ package com.jsframe.nf_community.service;
 
 import com.jsframe.nf_community.entity.Board;
 import com.jsframe.nf_community.entity.BoardFile;
+import com.jsframe.nf_community.entity.BoardPage;
 import com.jsframe.nf_community.entity.Member;
 import com.jsframe.nf_community.repository.BoardFileRepository;
 import com.jsframe.nf_community.repository.BoardRepository;
@@ -163,20 +164,28 @@ public class BoardService {
         return result;
     }
 
-    public List<Board> getBoardList(Integer pageNum, HttpSession session) {
+    public List<Board> getBoardList() {
         log.info("getBoardList()");
+        return bRepo.findAll();
+    }
+
+    public BoardPage getBoardPage(Integer pageNum) {
+        log.info("getBoardPage()");
         // 페이지 null 체크
         pageNum = pageNum == null ? 1 : pageNum;
 
-        //페이징 조건 생성
+        // 페이징 조건 생성
         int listCnt = 5;
         Pageable pb = PageRequest.of((pageNum - 1), listCnt, Sort.Direction.DESC, "bno");
         Page<Board> result = bRepo.findByBnoGreaterThan(0L, pb);
-        List<Board> boardList = result.getContent();
-        int totalPage = result.getTotalPages();
-        log.info("totalPage: " + totalPage);
 
-        return boardList;
+        // 페이지 정보 객체 생성
+        BoardPage bp = new BoardPage();
+        bp.setNumList(listCnt);
+        bp.setCurrentPage(pageNum);
+        bp.setTotalPage(result.getTotalPages());
+        bp.setBoardList(result.getContent());
+
+        return bp;
     }
-
 }

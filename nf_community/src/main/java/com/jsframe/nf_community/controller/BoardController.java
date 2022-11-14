@@ -1,6 +1,7 @@
 package com.jsframe.nf_community.controller;
 
 import com.jsframe.nf_community.entity.Board;
+import com.jsframe.nf_community.entity.BoardPage;
 import com.jsframe.nf_community.service.BoardService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,18 @@ public class BoardController {
     @Autowired
     private BoardService bServ;
 
-    @GetMapping("/board/testList")
+    @GetMapping("/board/list")
     @ResponseBody
-    public List<Board> getListTest(Integer pageNum, HttpSession session) {
-        List<Board> list = bServ.getBoardList(pageNum, session);
-        return list;
+    public List<Board> getList() {
+        return bServ.getBoardList();
     }
 
-    @GetMapping("/board/list")
-    public List<Board> getList(Integer pageNum, HttpSession session) {
-        mv = new ModelAndView();
-        List<Board> list = bServ.getBoardList(pageNum, session);
-        return list;
+    @GetMapping("/board/page")
+    @ResponseBody
+    public BoardPage getBoardPage(Integer pageNum) {
+        BoardPage bp = bServ.getBoardPage(pageNum);
+        log.info("bp" + bp.getCurrentPage());
+        return bp;
     }
 
     @GetMapping("writeFrm")
