@@ -2,7 +2,6 @@ package com.jsframe.nf_community.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
