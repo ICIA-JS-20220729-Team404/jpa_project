@@ -1,0 +1,72 @@
+<section id="board_section" class="content">
+  <h2 class="content--title">게시글</h2>
+  <table id="main_board_table">
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>작성일</th>
+      </tr>
+    </thead>
+    <tbody id="board_table_body">
+    </tbody>
+  </table>
+  <div id="main_board_page">
+  </div>
+</section>
+<script th:inline="javascript">
+  // 게시글 테이블 생성 함수
+  let setBoardTable = (boardPage) => {
+    // 게시글 테이블 초기화
+    $("#board_table_body").html("");
+    $("#main_board_page").html("");
+    if (boardPage == null) {
+      $("#board_table_body").append($("<div>").addClass("non-content").html("게시글 목록 요청 에러"));
+      return;
+    }
+    if (boardPage.boardList.length == 0) {
+      $("#board_table_body").append($("<div>").addClass("non-content").html("글이 없습니다"));
+      return;
+    }
+    // 게시글 테이블 생성
+    for (let i=0; i<boardPage.numList; i++) {
+      let board = boardPage.boardList[i];
+      let $tr = $("<tr>");
+      if (board != null) {
+        $tr.append($("<td>").html(board.bno));
+        $tr.append($("<td>").append($("<a>").attr("href", "/board/detail?bno="+board.bno).html(board.btitle)));
+        $tr.append($("<td>").html(board.bid.mid));
+        $tr.append($("<td>").html(board.bdate));
+      }
+      $("#board_table_body").append($tr);
+    }
+    // 페이지 이동 버튼 생성
+    let $currentPage = $("<span>").html(boardPage.currentPage);
+    let $prevBtn = $("<button>").html("&lt;").click(function() {
+      requestBoardPage(boardPage.currentPage - 1);
+    });
+    if (boardPage.currentPage == 1) $prevBtn.attr("disabled", true);
+    let $nextBtn = $("<button>").html("&gt;").click(function() {
+      requestBoardPage(boardPage.currentPage + 1);
+    });
+    if (boardPage.currentPage == boardPage.totalPage) $nextBtn.attr("disabled", true);
+    $("#main_board_page").append($prevBtn).append($currentPage).append($nextBtn);
+  };
+  // 게시글 페이지 요청 함수
+  let requestBoardPage = (pageNum) => {
+      $.ajax({
+          url: "/board/page",
+          type: "get",
+          data: {"pageNum": pageNum},
+          success: function (boardPage) {
+              setBoardTable(boardPage);
+          },
+          error: function (error) {
+              setBoardTable(null);
+          }
+      });
+  };
+  // 게시글 초기화
+  requestBoardPage(1);
+</script>
