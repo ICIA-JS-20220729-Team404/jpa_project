@@ -70,5 +70,27 @@ public class MemberService {
         rttr.addFlashAttribute("msg", msg);
         return view;
     }
+
+    public boolean loginProc(Member member, HttpSession session) {
+        log.info("loginProc");
+        boolean result = false;
+        log.info(member.getMid());
+
+        Member m = mRepo.findMemberByMid(member.getMid());
+        if (m != null) {//입력한 회원의 아이디가 있음
+            String cPwd = m.getMpw();
+            if (encoder.matches(member.getMpw(), cPwd)) {
+                member = mRepo.findMemberByMid(member.getMid());
+                // 세션에 로그인 성공 정보 저장
+                session.setAttribute("mem", member);
+                result = true;
+            } else {// 비밀번호가 맞지 않는 경우
+
+            }
+        } else {//잘못된 아이디 입력
+            result = false;
+        }
+        return result;
+    }
 }
 

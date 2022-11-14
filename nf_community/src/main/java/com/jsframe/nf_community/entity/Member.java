@@ -23,5 +23,4 @@ public class Member {
 
     @Column(length = 45)
     private String mphone;
-
 }

@@ -69,6 +69,48 @@ public class BoardService {
         return view;
     }
 
+    public boolean insertBoard(List<MultipartFile> files, Board board, HttpSession session) {
+        log.info("insertBoard()");
+
+        boolean result = false;
+        try {
+//            Member member = (Member)session.getAttribute("mem");
+//            member.getMid();
+            Member member = mRepo.findMemberByMid("goguma");
+
+            board.setBid(member);
+            bRepo.save(board);
+            log.info("bno : " + board.getBno());
+
+            //파일 업로드를 위한 메소드
+            fileUpLoad(files, session, board);
+
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        }
+        return result;
+    }
+
+
+    public boolean insertFile(List<MultipartFile> files, Board board, HttpSession session) {
+        log.info("insertFile()");
+        boolean result = false;
+        try {
+//            Member member = (Member)session.getAttribute("mem");
+//            member.getMid();
+            Member member = mRepo.findMemberByMid("goguma");
+            //파일 업로드를 위한 메소드
+            fileUpLoad(files, session, board);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        }
+        return result;
+    }
+
     private void fileUpLoad(List<MultipartFile> files, HttpSession session, Board board)
             throws Exception{
         log.info("fileUpLoad()");
@@ -100,6 +142,25 @@ public class BoardService {
             bfRepo.save(bf);
         }
 
+    }
+
+    public Board getBoard(long bno) {
+        log.info("getBoard()");
+        return bRepo.findById(bno).get();
+    }
+
+    public boolean deleteBoard(long bno) {
+        boolean result = false;
+        try
+        {
+            bRepo.deleteById(bno);
+            result = true;
+        }
+        catch (Exception e) {
+            result = false;
+            log.info(e.getMessage());
+        }
+        return result;
     }
 
     public List<Board> getBoardList(Integer pageNum, HttpSession session) {
