@@ -8,10 +8,11 @@ import javax.persistence.*;
 @Table(name = "membertbl")
 @Data
 public class Member {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long mno;
 
+    @Id
     @Column(unique = true, nullable = false, length = 45)
     private String mid;
 
