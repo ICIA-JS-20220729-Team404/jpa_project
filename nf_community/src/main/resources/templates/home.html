@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>~404~</title>
     <link rel="stylesheet" href="./common.css" />
     <link rel="stylesheet" href="./home.css" />
-    <script>
-        const $ = (selector) => document.querySelector(selector);
-        window.onload = () => {
-            const $header = $("header");
-            window.addEventListener("scroll", (e) => {
-                if (window.scrollY > 300 && $header.classList.contains("active"))
-                    return;
-                $header.classList[window.scrollY > 200 ? "add" : "remove"]("active");
-            });
-        };
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 <header>
@@ -47,208 +37,19 @@
     </p>
 </section>
 <section class="content">
-    <h2 class="content--title">First Section</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td class="left">titles les more can do it</td>
-            <td>manme</td>
-            <td>8 Hour before</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>Flandre</td>
-            <td>1 Days before</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td class="left">titles les more can do it</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        </tbody>
-    </table>
+    <th:block th:include="main_board.html"></th:block>
 </section>
 <section class="content second">
     <h2 class="content--title">Second Section</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td class="left">titles les more can do it</td>
-            <td>manme</td>
-            <td>8 Hour before</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>Flandre</td>
-            <td>1 Days before</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td class="left">titles les more can do it</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        </tbody>
-    </table>
+
 </section>
 <section class="content">
     <h2 class="content--title">Third Section</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td class="left">titles les more can do it</td>
-            <td>manme</td>
-            <td>8 Hour before</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>Flandre</td>
-            <td>1 Days before</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td class="left">titles les more can do it</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        </tbody>
-    </table>
+
 </section>
 <section class="content second">
     <h2 class="content--title">Forth Section</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td class="left">titles les more can do it</td>
-            <td>manme</td>
-            <td>8 Hour before</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td class="left">Some board title, can write it!</td>
-            <td>Flandre</td>
-            <td>1 Days before</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td class="left">Another Title. some body help me! Help!</td>
-            <td>David</td>
-            <td>1 Hour before</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td class="left">titles les more can do it</td>
-            <td>asdf</td>
-            <td>6 Hour before</td>
-        </tr>
-        </tbody>
-    </table>
+
 </section>
 <footer>
     <ul class="footer-nav">
@@ -271,4 +72,18 @@
     </div>
 </footer>
 </body>
+<script th:inline="javascript">
+    let initFunc = () => {
+        const $ = (selector) => document.querySelector(selector);
+        window.onload = () => {
+            const $header = $("header");
+            window.addEventListener("scroll", (e) => {
+                if (window.scrollY > 300 && $header.classList.contains("active"))
+                    return;
+                $header.classList[window.scrollY > 200 ? "add" : "remove"]("active");
+            });
+        };
+    };
+    initFunc();
+</script>
 </html>

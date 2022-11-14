@@ -95,9 +95,9 @@ header:not(.active) .app-header--utils a:hover {
 }
 
 .content--title {
-    font-size: 50px;
+    font-size: 25px;
     color: #333;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .content-list {
@@ -184,4 +184,13 @@ footer {
 
 .footer-info p:last-child {
     text-align: right;
+}
+
+#board_section {
+
+}
+
+#main_board_page {
+    display: flex;
+    justify-content: center;
 }
