@@ -6,6 +6,10 @@ import com.jsframe.nf_community.repository.BoardRepository;
 import com.jsframe.nf_community.repository.MemberRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,14 +59,19 @@ public class BoardService {
         return view;
     }
 
-//    public List<Board> getBoardList(){
-//        log.info("getBoardList()");
-//
-//        //게시글 가져와서 담기
-//        List<Board> boardList = bRepo.findAll();
-////        mv.addObject("board", board);
-////        mv.addObject("bfList", bfList);
-//
-//        return boardList;
-//    }
+    public List<Board> getBoardList(Integer pageNum, HttpSession session) {
+        log.info("getBoardList()");
+        // 페이지 null 체크
+        pageNum = pageNum == null ? 1 : pageNum;
+
+        //페이징 조건 생성
+        int listCnt = 5;
+        Pageable pb = PageRequest.of((pageNum - 1), listCnt, Sort.Direction.DESC, "bno");
+        Page<Board> result = bRepo.findByBnoGreaterThan(0L, pb);
+        List<Board> boardList = result.getContent();
+        int totalPage = result.getTotalPages();
+        log.info("totalPage: " + totalPage);
+
+        return boardList;
+    }
 }
