@@ -1,10 +1,13 @@
 package com.jsframe.nf_community.controller;
 
 import com.jsframe.nf_community.entity.Board;
+import com.jsframe.nf_community.entity.BoardFile;
 import com.jsframe.nf_community.entity.BoardPage;
 import com.jsframe.nf_community.service.BoardService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -102,4 +106,20 @@ public class BoardController {
     public String write(){
         return "write";
     }
+
+    @GetMapping("/board/file/list")
+    @ResponseBody
+    public List<BoardFile> getBoardFileList(long bno) {
+        return bServ.getFileList(bno);
+    }
+
+    @GetMapping("/board/file/download")
+    @ResponseBody
+    public ResponseEntity<Resource> getBoardFileDownload(long bfnum, HttpSession session) throws IOException {
+        BoardFile bf = bServ.getBoardFile(bfnum);
+        ResponseEntity<Resource> resp = bServ.fileDownload(bf, session);
+        return resp;
+    }
 }
+
+

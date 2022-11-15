@@ -49,6 +49,21 @@
                   $("#bcontent").html(board.bcontent);
                   $("#bdate").html(board.bdate);
                   $("#bno").val(board.bno);
+                  $.ajax({
+                    url: "/board/file/list",
+                    type: "get",
+                    data: {"bno": board.bno},
+                    success: function (fileList) {
+                      $("#fileList").html("");
+                      for (file of fileList) {
+                        console.log(file.bforiname);
+                        $("#fileList").append($("<p>").append($("<a>").html(file.bforiname)
+                                .attr("href", "/board/file/download?bfnum="+file.bfnum)));
+                      }
+                    },
+                    error: function (error) {
+                    }
+                  });
                   $("#popupBoardDetailView").toggleClass('show');
                   const attrShow = $("#popupBoardDetailView").attr('show');
                   if (attrShow !== "undefined" && attrShow !== false) {
@@ -74,6 +89,7 @@
     if (boardPage.currentPage == boardPage.totalPage) $nextBtn.attr("disabled", true);
     $("#main_board_page").append($prevBtn).append($currentPage).append($nextBtn);
   };
+
   // 게시글 페이지 요청 함수
   let requestBoardPage = (pageNum) => {
       $.ajax({
