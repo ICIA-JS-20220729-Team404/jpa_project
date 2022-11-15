@@ -1,89 +1,41 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8" />
-  <title>로그인</title>
-  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-          integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-          crossorigin="anonymous"></script>
-    <style>
-        .modal {
-            position: absolute;
-            top: 0;
-            left: 0;
+<link rel="stylesheet" href="./modal.css" />
 
-            width: 100%;
-            height: 100%;
-
-            display: none;
-
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal.show {
-            display: block;
-        }
-
-        .modal_body {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-
-            width: 400px;
-            height: 600px;
-
-            padding: 40px;
-
-            text-align: center;
-
-            background-color: rgb(255, 255, 255);
-            border-radius: 10px;
-            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-
-            transform: translateX(-50%) translateY(-50%);
-        }
-    </style>
-</head>
-
-<body>
 <div class="modal">
     <div class="modal_body">
         <h3>로그인</h3>
-    <form id="loginFrm">
-        <input id="inputid" type="text" name="mid" autofocus placeholder="아이디" required>
-        <br>
-        <input id="inputpw" type="password" name="mpw" placeholder="비밀번호" required>
-        <br>
-        <button type="button" id="loginbtn">로그인</button>
-    </form>
+        <form id="loginFrm">
+            <input id="inputid" type="text" name="mid" autofocus placeholder="아이디" required>
+            <br>
+            <input id="inputpw" type="password" name="mpw" placeholder="비밀번호" required>
+            <br>
+            <button type="button" id="loginbtn">로그인</button>
+            <button type="submit" id="join" class="join-open-popup">회원가입</button>
+        </form>
     </div>
 </div>
-<button class="btn-open-popup">login</button>
-</body>
 
 <script th:inline="javascript">
-  const body = document.querySelector('body');
-  const modal = document.querySelector('.modal');
-  const btnOpenPopup = document.querySelector('.btn-open-popup');
+    const body = document.querySelector('body');
+    const modal = document.querySelector('.modal');
+    const btnOpenPopup = document.querySelector('.btn-open-popup');
 
-  btnOpenPopup.addEventListener('click', () => {
-    modal.classList.toggle('show');
+    btnOpenPopup.addEventListener('click', () => {
+        modal.classList.toggle('show');
 
-    if (modal.classList.contains('show')) {
-      body.style.overflow = 'hidden';
-    }
-  });
+        if (modal.classList.contains('show')) {
+            body.style.overflow = 'hidden';
+        }
+    });
 
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modal.classList.toggle('show');
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.toggle('show');
 
-      if (!modal.classList.contains('show')) {
-        body.style.overflow = 'auto';
-      }
-    }
-  });
-
+            if (!modal.classList.contains('show')) {
+                body.style.overflow = 'auto';
+            }
+        }
+    });
 
   $("#loginbtn").click(function (){
       // form 데이터를 가져와 직렬화 한 후 전송
@@ -103,6 +55,4 @@
           }
       })
   });
-
 </script>
-</html>

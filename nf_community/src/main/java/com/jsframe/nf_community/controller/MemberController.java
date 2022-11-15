@@ -18,7 +18,7 @@ public class MemberController {
 
     @Autowired
     private MemberService mServ;
-
+//--------------------------- 페이지 처리 시 ---------------------------------
     @GetMapping("joinFrm")
     public String joinFrm(){
         log.info("joinFrm()");
@@ -46,6 +46,7 @@ public class MemberController {
 
         return view;
     }
+//--------------------------- modal 사용 ---------------------------------
 
     @GetMapping("login")
     public String login(){
@@ -57,6 +58,19 @@ public class MemberController {
     @ResponseBody
     public boolean login(Member member, HttpSession session) {
         boolean result = mServ.loginProc(member, session);
+        return result;
+    }
+
+    @GetMapping("join")
+    public String join(){
+        log.info("join()");
+        return "join";
+    }
+
+    @PostMapping("/member/join")
+    @ResponseBody
+    public boolean join(Member member) {
+        boolean result = mServ.joinProc(member);
         return result;
     }
 

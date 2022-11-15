@@ -21,6 +21,8 @@ public class MemberService {
     // 비밀번호 암호화 및 확인 객체
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+//--------------------------- 페이지 처리 시 ---------------------------------
+
     public String joinProc(Member member, RedirectAttributes rttr){
         log.info("joinProc()");
         String view = null;
@@ -43,7 +45,6 @@ public class MemberService {
 
         return view;
     }
-
     public String loginProc(Member member, HttpSession session, RedirectAttributes rttr) {
         log.info("loginProc");
 
@@ -71,6 +72,7 @@ public class MemberService {
         return view;
     }
 
+//--------------------------- modal 사용 ---------------------------------
     public boolean loginProc(Member member, HttpSession session) {
         log.info("loginProc");
         boolean result = false;
@@ -90,6 +92,27 @@ public class MemberService {
         } else {//잘못된 아이디 입력
             result = false;
         }
+        return result;
+    }
+
+    public boolean joinProc(Member member){
+        log.info("joinProc()");
+        boolean result = false;
+        String view = null;
+
+        // 비밀번호 암호화 처리
+        String cPwd = encoder.encode(member.getMpw());
+        member.setMpw(cPwd); // 암호화된 비밀번호로 변경
+
+        try{
+            mRepo.save(member);
+            result = true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            result = false;
+        }
+
         return result;
     }
 }
