@@ -80,10 +80,9 @@ public class BoardController {
 
     @GetMapping("/board/delete")
     @ResponseBody
-    public boolean deleteBoard(long bno) {
-        return bServ.deleteBoard(bno);
+    public boolean deleteBoard(long bno, HttpSession session) {
+        return bServ.deleteBoard(bno, session);
     }
-
 
     @PostMapping("/board/update")
     @ResponseBody

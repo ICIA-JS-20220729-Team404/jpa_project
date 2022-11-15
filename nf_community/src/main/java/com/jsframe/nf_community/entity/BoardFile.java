@@ -1,6 +1,7 @@
 package com.jsframe.nf_community.entity;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 

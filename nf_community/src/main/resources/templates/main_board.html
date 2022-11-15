@@ -34,9 +34,27 @@
       let board = boardPage.boardList[i];
       let $tr = $("<tr>");
       if (board != null) {
+        // 게시글 번호
         $tr.append($("<td>").html(board.bno));
-        $tr.append($("<td>").append($("<a>").attr("href", "/board/detail?bno="+board.bno).html(board.btitle)));
+        // 게시글 제목
+        $tr.append($("<td>").append($("<span>").attr("bno", board.bno).html(board.btitle))
+                .click(function() {
+                  $("#btitle").html(board.btitle);
+                  $("#writer").html(board.bid.mid);
+                  $("#bcontent").attr("disabled", true);
+                  $("#bcontent").val(board.bcontent);
+                  $("#bcontent").html(board.bcontent);
+                  $("#bdate").html(board.bdate);
+                  $("#bno").val(board.bno);
+                  $(".popupDetailMainView").toggleClass('show');
+                  const attrShow = $(".popupDetailMainView").attr('show');
+                  if (attrShow !== "undefined" && attrShow !== false) {
+                    $("body").css("overflow", "hidden");
+                  }
+        }));
+        // 게시글 작성자
         $tr.append($("<td>").html(board.bid.mid));
+        // 게시글 작성일자
         $tr.append($("<td>").html(board.bdate));
       }
       $("#board_table_body").append($tr);

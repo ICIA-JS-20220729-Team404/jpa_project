@@ -153,10 +153,23 @@ public class BoardService {
         return bRepo.findById(bno).get();
     }
 
-    public boolean deleteBoard(long bno) {
+    public boolean deleteBoard(long bno, HttpSession session) {
         boolean result = false;
-        try
-        {
+        try {
+            Board board = bRepo.findById(bno).get();
+            List<BoardFile> bfList = bfRepo.findByBfbid(board);
+            String realPath = session.getServletContext().getRealPath("/");
+            realPath += "upload/";
+            //파일 삭제
+            for(BoardFile bf : bfList){
+                String delPath = realPath + bf.getBfsysname();
+                File file = new File(delPath);
+                if(file.exists()){
+                    file.delete();//파일이 있으면 삭제
+                }
+            }
+
+            bfRepo.deleteByBfbid(board);
             bRepo.deleteById(bno);
             result = true;
         }
