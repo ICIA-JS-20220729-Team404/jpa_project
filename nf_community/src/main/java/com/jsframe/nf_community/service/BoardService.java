@@ -21,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -187,5 +189,37 @@ public class BoardService {
         bp.setBoardList(result.getContent());
 
         return bp;
+    }
+
+    public boolean updateBoard(List<MultipartFile> files, HttpSession session, Board board) {
+        log.info("updateBoard()");
+        boolean result = false;
+
+        if (files != null) {
+            try {
+                Member member = mRepo.findMemberByMid("goguma");
+                board.setBid(member);
+                board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
+                bRepo.save(board);
+                fileUpLoad(files, session, board);
+                result = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = false;
+            }
+        }
+        else {
+            try {
+                Member member = mRepo.findMemberByMid("goguma");
+                board.setBid(member);
+                board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
+                bRepo.save(board);
+                result = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = false;
+            }
+        }
+        return result;
     }
 }

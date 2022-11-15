@@ -83,4 +83,16 @@ public class BoardController {
         boolean result = bServ.insertFile(files, board, session);
         return result;
     }
+
+    @PostMapping("/board/update")
+    @ResponseBody
+    public boolean updateBoard(List<MultipartFile> files, HttpSession session, Board board){
+        boolean result = bServ.updateBoard(files, session, board);
+        return result;
+    }
+
+    @GetMapping("write")
+    public String write(){
+        return "write";
+    }
 }
