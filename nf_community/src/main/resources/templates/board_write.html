@@ -42,7 +42,7 @@
       return;
     }
     for (let i=0; i<filesData.length; i++) {
-      fileFormData.append("files", filesData[0]);
+      fileFormData.append("files", filesData[i]);
     }
     fileFormData.append("bno", bno);
     $.ajax({
