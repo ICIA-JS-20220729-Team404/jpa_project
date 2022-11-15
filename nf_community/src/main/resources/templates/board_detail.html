@@ -34,7 +34,7 @@
   }
 </style>
 
-<div class="popupDetailMainView">
+<div id="popupBoardDetailView" class="popupDetailMainView">
   <div class="popupDetailSubView">
     <h3>게시글 상세 보기</h3>
     <br>
@@ -49,17 +49,21 @@
 
 <script>
   // 팝업 닫기 함수
-  let closePopup = function () {
-    $(".popupDetailMainView").toggleClass('show');
-    const attrShow = $(".popupDetailMainView").attr('show');
+  let closeBoardDetailPopup = function () {
+    $("#popupBoardDetailView").toggleClass('show');
+    const attrShow = $("#popupBoardDetailView").attr('show');
     if (attrShow === undefined || attrShow === false) {
       $("body").css("overflow", "auto");
     }
+    // 초기화
+    $("#bcontent").attr("disabled", true);
+    $("#delBtn").attr("disabled", false);
+    $("#modBtn").html("수정");
   };
   // 팝업 클릭 이벤트 처리
-  $(".popupDetailMainView").click( (event) => {
-    if (event.target === $(".popupDetailMainView")[0]) {
-      closePopup();
+  $("#popupBoardDetailView").click( (event) => {
+    if (event.target === $("#popupBoardDetailView")[0]) {
+      closeBoardDetailPopup();
     }
   });
   // 삭제 버튼 클릭 이벤트 처리
@@ -75,12 +79,31 @@
         alert(error);
       },
       complete: function () {
-        closePopup();
+        closeBoardDetailPopup();
       }
     });
   });
   // 수정 버튼 클릭 이벤트 처리
   $("#modBtn").click(function () {
+    $("#bcontent").attr("disabled", false);
+    $("#modBtn").html("작성");
 
+    $.ajax({
+      url: "/board/update",
+      type: "POST",
+      data: {"bno": $("#bno").val(),
+        "btitle": "asdsadsadsadsadsadsadsadsadsadsadsad",
+        "bcontent": "fdgdgddhgfhfgdhgfhfhgfhgfhfhgfhgfhgfhgfh"
+      },
+      success: function (result){
+        alert(result);
+      },
+      error: function (error){
+        alert(error);
+      },
+      complete: function () {
+        closeBoardDetailPopup();
+      }
+    });
   });
 </script>

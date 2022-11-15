@@ -1,5 +1,8 @@
 <section id="board_section" class="content">
-  <h2 class="content--title">게시글</h2>
+  <div id="content--title--div">
+    <h2 class="content--title">게시글</h2>
+    <button id="writeBtn" type="button">글쓰기</button>
+  </div>
   <table id="main_board_table">
     <thead>
       <tr>
@@ -46,8 +49,8 @@
                   $("#bcontent").html(board.bcontent);
                   $("#bdate").html(board.bdate);
                   $("#bno").val(board.bno);
-                  $(".popupDetailMainView").toggleClass('show');
-                  const attrShow = $(".popupDetailMainView").attr('show');
+                  $("#popupBoardDetailView").toggleClass('show');
+                  const attrShow = $("#popupBoardDetailView").attr('show');
                   if (attrShow !== "undefined" && attrShow !== false) {
                     $("body").css("overflow", "hidden");
                   }
@@ -85,6 +88,14 @@
           }
       });
   };
+  // 글쓰기 버튼 클릭 이벤트 처리
+  $("#writeBtn").click(function (){
+    $("#popupBoardWriteView").toggleClass('show');
+    const attrShow = $("#popupBoardWriteView").attr('show');
+    if (attrShow !== "undefined" && attrShow !== false) {
+      $("body").css("overflow", "hidden");
+    }
+  });
   // 게시글 초기화
   requestBoardPage(1);
 </script>
