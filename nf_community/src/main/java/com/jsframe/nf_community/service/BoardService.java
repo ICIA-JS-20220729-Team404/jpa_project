@@ -50,8 +50,9 @@ public class BoardService {
         String msg = null;
         String view = null;
         try {
-            Member member = (Member) session.getAttribute("mem");
-            member.getMid();
+//            Member member = (Member) session.getAttribute("mem");
+            Member member = new Member();
+            member.setMid("goguma");
             board.setBid(member);
             bRepo.save(board);
             log.info("bno : " + board.getBno());
@@ -72,30 +73,29 @@ public class BoardService {
         return view;
     }
 
-    public boolean insertBoard(List<MultipartFile> files, Board board, HttpSession session) {
+    public long insertBoard(Board board, HttpSession session) {
         log.info("insertBoard()");
 
-        boolean result = false;
+        long result = -1;
         try {
 //            Member member = (Member)session.getAttribute("mem");
 //            member.getMid();
             Member member = mRepo.findMemberByMid("goguma");
+            log.info(board.getBtitle());
+            log.info(board.getBcontent());
+            log.info(member.getMid());
 
             board.setBid(member);
             bRepo.save(board);
             log.info("bno : " + board.getBno());
-
-            //파일 업로드를 위한 메소드
-            fileUpLoad(files, session, board);
-
-            result = true;
+            result = board.getBno();
         } catch (Exception e) {
+            log.info(e.getMessage());
             e.printStackTrace();
-            result = false;
+            result = -1;
         }
         return result;
     }
-
 
     public boolean insertFile(List<MultipartFile> files, Board board, HttpSession session) {
         log.info("insertFile()");

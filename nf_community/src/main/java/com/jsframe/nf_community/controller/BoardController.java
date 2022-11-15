@@ -57,11 +57,18 @@ public class BoardController {
 
     @PostMapping("/board/write")
     @ResponseBody
-    public boolean writeBoard(@RequestPart List<MultipartFile> files,
+    public long writeBoard(Board board, HttpSession session, RedirectAttributes rttr) {
+        long result = bServ.insertBoard(board, session);
+        return result;
+    }
+
+    @PostMapping("/board/file/write")
+    @ResponseBody
+    public boolean writeBoardFile(@RequestPart List<MultipartFile> files,
                               Board board, HttpSession session,
                               RedirectAttributes rttr) {
 
-        boolean result = bServ.insertBoard(files, board, session);
+        boolean result = bServ.insertFile(files, board, session);
         return result;
     }
 
@@ -77,12 +84,6 @@ public class BoardController {
         return bServ.deleteBoard(bno);
     }
 
-    @PostMapping("/board/file/write")
-    @ResponseBody
-    public boolean writeFile(@RequestPart List<MultipartFile> files, Board board, HttpSession session) {
-        boolean result = bServ.insertFile(files, board, session);
-        return result;
-    }
 
     @PostMapping("/board/update")
     @ResponseBody
