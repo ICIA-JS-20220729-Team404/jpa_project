@@ -98,7 +98,6 @@ public class MemberService {
     public boolean joinProc(Member member){
         log.info("joinProc()");
         boolean result = false;
-        String view = null;
 
         // 비밀번호 암호화 처리
         String cPwd = encoder.encode(member.getMpw());

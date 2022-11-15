@@ -4,19 +4,24 @@
     <div class="join_body">
         <h3>회원가입</h3>
         <form id="joinFrm">
-            <input type="text" name="mid" autofocus placeholder="아이디" required>
             <br>
-            <input type="password" name="mpw" placeholder="비밀번호" required>
+            <span id="joinInfo">* 은 필수 입력 정보입니다.</span>
+            <input id="join_id" type="text" name="mid" placeholder="아이디*" >
+            <!--<button id="checkbtn">중복확인</button>-->
             <br>
-            <input type="text" name="mname" placeholder="이름" required>
+            <input id="join_pw" type="password" name="mpw" placeholder="비밀번호*" >
+            <br>
+            <input id="join_name" type="text" name="mname" placeholder="이름*" >
             <br>
             <input type="text" name="mphone" placeholder="연락처">
+            <br>
             <br>
             <button type="submit" id="joinbtn">회원가입</button>
         </form>
     </div>
 </div>
 <script th:inline="javascript">
+    // modal
     const jBody = document.querySelector('body');
     const join = document.querySelector('.join');
     const joinOpenPopup = document.querySelector('.join-open-popup');
@@ -38,23 +43,34 @@
             }
         }
     });
+    ;
 
-  $("#joinbtn").click(function (){
+    // 데이터 전송 시 비워둔 칸 검사
+    $("#joinbtn").click(function (){
       // form 데이터를 가져와 직렬화 한 후 전송
       const formData = $("#joinFrm").serialize();
       console.log(formData);
 
-      $.ajax({
-          url : "/member/join",
-          type : "POST",
-          data : formData,
-          success : function (result){
-              alert(result);
-          },
-          error : function (error){
-              alert("전송 실패");
-              console.log(error);
-          }
-      })
+      if((0<$("#join_id").val().length)
+          && (0<$("#join_pw").val().length)
+          && (0<$("#join_name").val().length)){
+          alert("환영합니다.");
+
+          $.ajax({
+              url : "/member/join",
+              type : "POST",
+              data : formData,
+              success : function (result){
+                  alert(result);
+              },
+              error : function (error){
+                  alert("전송 실패");
+                  console.log(error);
+              }
+          })
+      }else{
+          alert("회원가입을 완료할 수 없습니다. 다시 확인하세요.");
+      }
   });
 </script>
+
