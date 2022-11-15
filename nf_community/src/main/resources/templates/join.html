@@ -6,7 +6,7 @@
         <form id="joinFrm">
             <br>
             <span id="joinInfo">* 은 필수 입력 정보입니다.</span>
-            <input id="join_id" type="text" name="mid" placeholder="아이디*" >
+            <input id="join_id" type="text" name="mid" oninput="checkId()" autocomplete="off" placeholder="아이디*" >
             <!--<button id="checkbtn">중복확인</button>-->
             <br>
             <input id="join_pw" type="password" name="mpw" placeholder="비밀번호*" >
@@ -22,6 +22,7 @@
 </div>
 <script th:inline="javascript">
     // modal
+    let idValid = false;
     const jBody = document.querySelector('body');
     const join = document.querySelector('.join');
     const joinOpenPopup = document.querySelector('.join-open-popup');
@@ -53,7 +54,8 @@
 
       if((0<$("#join_id").val().length)
           && (0<$("#join_pw").val().length)
-          && (0<$("#join_name").val().length)){
+          && (0<$("#join_name").val().length)
+          && (idValid)){
           alert("환영합니다.");
 
           $.ajax({
@@ -72,5 +74,28 @@
           alert("회원가입을 완료할 수 없습니다. 다시 확인하세요.");
       }
   });
+
+    function checkId(){
+        const id = $("#join_id").val();
+        $.ajax({
+            url : "/member/checkId",
+            type : "GET",
+            data : { id: id },
+            success : function (result){
+                console.log(result);
+                if(result == 0){
+                    idValid = true;
+                    $("#join_id").css("background-color", "#c2fac0");
+                }else if(result > 0){
+                    idValid = false;
+                    $("#join_id").css("background-color", "#fac1c0");
+                }
+            },
+            error : function (error){
+                alert(error);
+            }
+        })
+
+    }
 </script>
 

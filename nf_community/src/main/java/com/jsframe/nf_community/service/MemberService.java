@@ -73,6 +73,27 @@ public class MemberService {
     }
 
 //--------------------------- modal 사용 ---------------------------------
+
+    public boolean joinProc(Member member){
+        log.info("joinProc()");
+        boolean result = false;
+
+        // 비밀번호 암호화 처리
+        String cPwd = encoder.encode(member.getMpw());
+        member.setMpw(cPwd); // 암호화된 비밀번호로 변경
+
+        try{
+            mRepo.save(member);
+            result = true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            result = false;
+        }
+
+        return result;
+    }
+
     public boolean loginProc(Member member, HttpSession session) {
         log.info("loginProc");
         boolean result = false;
@@ -95,24 +116,13 @@ public class MemberService {
         return result;
     }
 
-    public boolean joinProc(Member member){
-        log.info("joinProc()");
-        boolean result = false;
+    public int checkId(String id){
+        log.info("checkId");
 
-        // 비밀번호 암호화 처리
-        String cPwd = encoder.encode(member.getMpw());
-        member.setMpw(cPwd); // 암호화된 비밀번호로 변경
-
-        try{
-            mRepo.save(member);
-            result = true;
-
-        }catch (Exception e){
-            e.printStackTrace();
-            result = false;
-        }
-
-        return result;
+        return mRepo.countMemberByMid(id);
     }
+
+
+
 }
 
