@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -191,35 +192,36 @@ public class BoardService {
         return bp;
     }
 
-    public boolean updateBoard(List<MultipartFile> files, HttpSession session, Board board) {
+    public long updateBoard(HttpSession session, Board board) {
+        log.info("updateBoard()");
+        long result = -1;
+
+        try {
+            Member member = mRepo.findMemberByMid("goguma");
+            board.setBid(member);
+            board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
+            bRepo.save(board);
+            result = board.getBno();
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = -1;
+        }
+
+        return result;
+    }
+
+    public boolean updateFile(List<MultipartFile> files, HttpSession session, Board board) {
         log.info("updateBoard()");
         boolean result = false;
 
-        if (files != null) {
             try {
-                Member member = mRepo.findMemberByMid("goguma");
-                board.setBid(member);
-                board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
-                bRepo.save(board);
                 fileUpLoad(files, session, board);
                 result = true;
             } catch (Exception e) {
                 e.printStackTrace();
                 result = false;
             }
-        }
-        else {
-            try {
-                Member member = mRepo.findMemberByMid("goguma");
-                board.setBid(member);
-                board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
-                bRepo.save(board);
-                result = true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                result = false;
-            }
-        }
+
         return result;
     }
 }

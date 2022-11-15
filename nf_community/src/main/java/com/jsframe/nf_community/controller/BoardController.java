@@ -87,8 +87,15 @@ public class BoardController {
 
     @PostMapping("/board/update")
     @ResponseBody
-    public boolean updateBoard(List<MultipartFile> files, HttpSession session, Board board){
-        boolean result = bServ.updateBoard(files, session, board);
+    public long updateBoard(HttpSession session, Board board){
+        long result = bServ.updateBoard(session, board);
+        return result;
+    }
+
+    @PostMapping("/board/file/update")
+    @ResponseBody
+    public boolean updateBoardFile(@RequestPart List<MultipartFile> files,HttpSession session, Board board){
+        boolean result = bServ.updateFile(files,session, board);
         return result;
     }
 
