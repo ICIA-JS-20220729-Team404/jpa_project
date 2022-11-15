@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .popupMainView {
+        display: none;
+        position : fixed;
+        top : 0;
+        left : 0;
+        width : 100%;
+        height : 100%;
+        background-color: rgba(0,0,0,0.2);
+        align-items: center;
+        justify-content: center;
+    }
+    .popupSubView {
+        width : auto;
+        height: auto;
+        padding: 10px;
+        background-color: white;
+        box-sizing: border-box;
+
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    }
+    .popupMainView.active {
+        display: flex;
+    }
+    </style>
+
+</head>
+<body>
+<button class="popUp">팝업 버튼</button>
+<div class="popupMainView">
+    <div class="popupSubView">
+            <form th:action="@{writeProc}" method="post" id="form_Id" enctype="multipart/form-data">
+        <div>
+            <input type="text" class="write-input" name="btitle"
+                   placeholder="제목" required>
+        </div>
+        <div>
+                    <textarea rows="15" name="bcontent"
+                              placeholder="글내용을 작성하세요." class="write-input ta"></textarea>
+        </div>
+        <div>
+            <div class="filebox">
+                <label for="file">업로드</label>
+                <input type="file" name="files" id="file" multiple>
+                <input type="text" class="upload-name" value="파일선택" readonly>
+            </div>
+        </div>
+        <div class="btn-area">
+            <input type="submit" class="btn-write submit" value="전송">
+            <input type="reset" class="btn-write reset" value="리셋">
+            <input type="button" class="btn-write" value="뒤로가기" id="backbtn">
+        </div>
+        </form>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    $(".popUp").click(() => {
+        $(".popupMainView").addClass("active");
+    })
+    $("#backbtn").click(() => {
+        $(".popupMainView").removeClass("active");
+    })
+
+    $(".submit").click(() => {
+        const formData = $("#form_Id").serialize();
+        $.ajax({
+            url : "/board/write",
+            type : "POST",
+            data : formData,
+            success : function (result){
+                alert(result);
+            },
+            error : function (error){
+                alert("전송실패");
+                console.log(error);
+            }
+        })
+    })
+</script>
+</html>
