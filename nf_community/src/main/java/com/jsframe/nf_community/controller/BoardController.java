@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -24,8 +23,6 @@ import java.util.List;
 @Controller
 @Log
 public class BoardController {
-    ModelAndView mv;
-
     @Autowired
     private BoardService bServ;
 
@@ -41,22 +38,6 @@ public class BoardController {
         BoardPage bp = bServ.getBoardPage(pageNum);
         log.info("bp" + bp.getCurrentPage());
         return bp;
-    }
-
-    @GetMapping("writeFrm")
-    public String writeFrm(){
-        log.info("writeFrm()");
-        return "writeFrm";
-    }
-
-    @PostMapping("writeProc")
-    public String writeProc(@RequestPart List<MultipartFile> files,
-                            Board board, HttpSession session,
-                            RedirectAttributes rttr){
-        log.info("writeProc()");
-        String view = bServ.insertBoard(files, board, session, rttr);
-
-        return view;
     }
 
     @PostMapping("/board/write")
@@ -102,11 +83,6 @@ public class BoardController {
         return result;
     }
 
-    @GetMapping("write")
-    public String write(){
-        return "write";
-    }
-
     @GetMapping("/board/file/list")
     @ResponseBody
     public List<BoardFile> getBoardFileList(long bno) {
@@ -128,5 +104,3 @@ public class BoardController {
         return true;
     }
 }
-
-

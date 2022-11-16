@@ -46,43 +46,6 @@ public class BoardService {
     @Autowired
     private BoardFileRepository bfRepo;
 
-    @Autowired
-    private MemberRepository mRepo;
-
-
-    private ModelAndView mv;
-
-    //게시글 저장 메소드
-    @Transactional
-    public String insertBoard(List<MultipartFile> files,
-                              Board board, HttpSession session,
-                              RedirectAttributes rttr) {
-        log.info("insertBoard()");
-        String msg = null;
-        String view = null;
-        try {
-            Member member = (Member)session.getAttribute("mem");
-            board.setBid(member);
-            board.setBcount(0);
-            bRepo.save(board);
-            log.info("bno : " + board.getBno());
-
-            //파일 업로드를 위한 메소드
-            fileUpLoad(files, board, session);
-
-            msg = "저장 성공";
-            view = "redirect:/";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            msg = "저장 실패";
-            view = "redirect:writeFrm";
-        }
-        rttr.addFlashAttribute("msg", msg);
-
-        return view;
-    }
-
     public long insertBoard(Board board, HttpSession session) {
         log.info("insertBoard()");
         long result = -1;
@@ -103,7 +66,6 @@ public class BoardService {
         log.info("insertFile()");
         boolean result = false;
         try {
-            //파일 업로드를 위한 메소드
             fileUpLoad(files, board, session);
             result = true;
         } catch (Exception e) {
@@ -113,12 +75,9 @@ public class BoardService {
         return result;
     }
 
-    private void fileUpLoad(List<MultipartFile> files, Board board, HttpSession session)
-            throws Exception{
+    private void fileUpLoad(List<MultipartFile> files, Board board, HttpSession session) throws Exception{
         log.info("fileUpLoad()");
-        String realPath = session.getServletContext().getRealPath("/");
-        log.info("realPath : " + realPath);
-        realPath += "upload\\";
+        String realPath = session.getServletContext().getRealPath("/") + "upload\\";
         File folder = new File(realPath);
         if(folder.isDirectory() == false){
             folder.mkdir();
@@ -133,18 +92,15 @@ public class BoardService {
             BoardFile bf = new BoardFile();
             bf.setBfbid(board);
             bf.setBforiname(orname);
-            String sysname = System.currentTimeMillis()
-                    + orname.substring(orname.lastIndexOf("."));
+            String sysname = System.currentTimeMillis() + orname.substring(orname.lastIndexOf("."));
             bf.setBfsysname(sysname);
 
             File file = new File(realPath + sysname);
-            log.info("upload file dir:" + realPath + sysname);
             mf.transferTo(file);
 
             // DB 에 File 정보를 저장
             bfRepo.save(bf);
         }
-
     }
 
     public Board getBoard(long bno) {
