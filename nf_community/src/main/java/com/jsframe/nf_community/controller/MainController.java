@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @Log
 public class MainController {
@@ -14,8 +16,9 @@ public class MainController {
     BoardService bServ;
 
     @GetMapping("/")
-    public ModelAndView home(){
+    public ModelAndView home(HttpSession session){
         ModelAndView mv = new ModelAndView();
+        mv.addObject("member", session.getAttribute("mem"));
         mv.addObject("boardPage", bServ.getBoardPage(1));
         mv.setViewName("home");
         return mv;

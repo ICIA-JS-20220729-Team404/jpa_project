@@ -21,10 +21,8 @@ public class MemberController {
     @PostMapping("/member/login")
     @ResponseBody
     public boolean login(Member member, HttpSession session) {
+        session.setAttribute("mem", member);
         boolean result = mServ.loginProc(member, session);
-        if (result) {
-            session.setAttribute("mem", member);
-        }
         return result;
     }
 
