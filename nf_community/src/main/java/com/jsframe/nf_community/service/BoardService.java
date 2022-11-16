@@ -85,20 +85,14 @@ public class BoardService {
 
     public long insertBoard(Board board, HttpSession session) {
         log.info("insertBoard()");
-
         long result = -1;
         try {
             Member member = (Member)session.getAttribute("mem");
-            log.info(board.getBtitle());
-            log.info(board.getBcontent());
-            log.info(member.getMid());
             board.setBid(member);
             board.setBcount(0);
             bRepo.save(board);
-            log.info("bno : " + board.getBno());
             result = board.getBno();
         } catch (Exception e) {
-            log.info(e.getMessage());
             e.printStackTrace();
             result = -1;
         }
