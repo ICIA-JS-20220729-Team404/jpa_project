@@ -28,6 +28,9 @@
     display: flex;
   }
 
+  #btitle {
+    width: 500px;
+  }
   #bcontent {
     width: 500px;
     height: 300px;
@@ -38,13 +41,13 @@
   <div class="popupDetailSubView">
     <h3>게시글 상세 보기</h3>
     <br>
-    <p><span id="btitle">제목</span></p>
+    <p><input type="text" id="btitle" disabled></p>
     <p><span id="writer">작성자</span></p>
     <p><span id="bdate">날짜</span></p>
     <textarea id="bcontent">내용</textarea>
     <div id="fileList"></div>
     <input type="hidden" id="bno" value="">
-    <p><button id="modBtn">수정</button><button id="delBtn">삭제</button></p>
+    <p><button id="modBtn">수정</button><button id="setBtn" disabled>적용</button><button id="delBtn">삭제</button></p>
   </div>
 </div>
 
@@ -57,9 +60,12 @@
       $("body").css("overflow", "auto");
     }
     // 초기화
+    $("#btitle").attr("disabled", true);
     $("#bcontent").attr("disabled", true);
     $("#delBtn").attr("disabled", false);
-    $("#modBtn").html("수정");
+    $("#modBtn").attr("disabled", false);
+    $("#setBtn").attr("disabled", true);
+    requestBoardPage($("#currentPage").html());
   };
   // 팝업 클릭 이벤트 처리
   $("#popupBoardDetailView").click( (event) => {
@@ -67,6 +73,26 @@
       closeBoardDetailPopup();
     }
   });
+  // 적용 버튼 클릭 이벤트 처리
+  $("#setBtn").click(function () {
+    $.ajax({
+      url: "/board/update",
+      type: "POST",
+      data: {"bno": $("#bno").val(),
+        "btitle": $("#btitle").val(),
+        "bcontent": $("#bcontent").val()
+      },
+      success: function (result){
+        alert(result);
+      },
+      error: function (error){
+        alert(error);
+      },
+      complete: function () {
+        closeBoardDetailPopup();
+      }
+    });
+  })
   // 삭제 버튼 클릭 이벤트 처리
   $("#delBtn").click(function () {
     $.ajax({
@@ -86,25 +112,9 @@
   });
   // 수정 버튼 클릭 이벤트 처리
   $("#modBtn").click(function () {
+    $("#btitle").attr("disabled", false);
     $("#bcontent").attr("disabled", false);
-    $("#modBtn").html("작성");
-
-    $.ajax({
-      url: "/board/update",
-      type: "POST",
-      data: {"bno": $("#bno").val(),
-        "btitle": "asdsadsadsadsadsadsadsadsadsadsadsad",
-        "bcontent": "fdgdgddhgfhfgdhgfhfhgfhgfhfhgfhgfhgfhgfh"
-      },
-      success: function (result){
-        alert(result);
-      },
-      error: function (error){
-        alert(error);
-      },
-      complete: function () {
-        closeBoardDetailPopup();
-      }
-    });
+    $(this).attr("disabled", true);
+    $("#setBtn").attr("disabled", false);
   });
 </script>

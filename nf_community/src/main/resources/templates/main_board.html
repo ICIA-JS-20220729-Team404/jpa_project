@@ -42,7 +42,7 @@
         // 게시글 제목
         $tr.append($("<td>").append($("<span>").attr("bno", board.bno).html(board.btitle))
                 .click(function() {
-                  $("#btitle").html(board.btitle);
+                  $("#btitle").val(board.btitle);
                   $("#writer").html(board.bid.mid);
                   $("#bcontent").attr("disabled", true);
                   $("#bcontent").val(board.bcontent);
@@ -78,7 +78,7 @@
       $("#board_table_body").append($tr);
     }
     // 페이지 이동 버튼 생성
-    let $currentPage = $("<span>").html(boardPage.currentPage);
+    let $currentPage = $("<span>").html(boardPage.currentPage).attr("id", "currentPage");
     let $prevBtn = $("<button>").html("&lt;").click(function() {
       requestBoardPage(boardPage.currentPage - 1);
     });

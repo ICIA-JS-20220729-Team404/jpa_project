@@ -25,6 +25,7 @@
     if (attrShow === undefined || attrShow === false) {
       $("body").css("overflow", "auto");
     }
+    requestBoardPage($("#currentPage").html());
   };
   // 팝업 클릭 이벤트 처리
   $("#popupBoardWriteView").click( (event) => {
