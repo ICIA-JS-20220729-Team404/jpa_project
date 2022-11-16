@@ -1,15 +1,22 @@
 <section id="board_section" class="content">
+  <hr>
   <div id="content--title--div">
     <h2 class="content--title">게시글</h2>
     <button id="writeBtn" type="button">글쓰기</button>
   </div>
   <table id="main_board_table">
+    <colgroup>
+      <col style="width: 5%">
+      <col style="width: 50%">
+      <col style="width: 10%">
+      <col style="width: 20%">
+    </colgroup>
     <thead>
       <tr>
         <th>번호</th>
         <th>제목</th>
-        <th>글쓴이</th>
-        <th>작성일</th>
+        <th>작성자</th>
+        <th>날짜</th>
       </tr>
     </thead>
     <tbody id="board_table_body">
@@ -47,7 +54,7 @@
                   $("#bcontent").attr("disabled", true);
                   $("#bcontent").val(board.bcontent);
                   $("#bcontent").html(board.bcontent);
-                  $("#bdate").html(board.bdate);
+                  $("#bdate").html(board.bdate.replace('T', ' ').substring(0, 19));
                   $("#bno").val(board.bno);
                   $.ajax({
                     url: "/board/file/list",
@@ -72,8 +79,10 @@
         }));
         // 게시글 작성자
         $tr.append($("<td>").html(board.bid.mid));
-        // 게시글 작성일자
-        $tr.append($("<td>").html(board.bdate));
+        // 게시글 작성날짜
+        $tr.append($("<td>").html(board.bdate.replace('T', ' ').substring(0, 19)));
+      } else {
+        $tr.append($("<td>").html("---"));
       }
       $("#board_table_body").append($tr);
     }
