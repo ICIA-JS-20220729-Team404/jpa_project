@@ -61,9 +61,7 @@ public class BoardService {
         String msg = null;
         String view = null;
         try {
-//            Member member = (Member) session.getAttribute("mem");
-            Member member = new Member();
-            member.setMid("goguma");
+            Member member = (Member)session.getAttribute("mem");
             board.setBid(member);
             board.setBcount(0);
             bRepo.save(board);
@@ -90,9 +88,7 @@ public class BoardService {
 
         long result = -1;
         try {
-//            Member member = (Member)session.getAttribute("mem");
-//            member.getMid();
-            Member member = mRepo.findMemberByMid("goguma");
+            Member member = (Member)session.getAttribute("mem");
             log.info(board.getBtitle());
             log.info(board.getBcontent());
             log.info(member.getMid());
@@ -113,9 +109,6 @@ public class BoardService {
         log.info("insertFile()");
         boolean result = false;
         try {
-//            Member member = (Member)session.getAttribute("mem");
-//            member.getMid();
-            Member member = mRepo.findMemberByMid("goguma");
             //파일 업로드를 위한 메소드
             fileUpLoad(files, board, session);
             result = true;
@@ -231,7 +224,7 @@ public class BoardService {
         long result = -1;
 
         try {
-            Member member = mRepo.findMemberByMid("goguma");
+            Member member = (Member)session.getAttribute("mem");
             board.setBid(member);
             board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
             bRepo.save(board);
