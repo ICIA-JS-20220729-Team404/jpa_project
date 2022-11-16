@@ -69,8 +69,7 @@ public class BoardController {
     @PostMapping("/board/file/write")
     @ResponseBody
     public boolean writeBoardFile(@RequestPart List<MultipartFile> files,
-                              Board board, HttpSession session,
-                              RedirectAttributes rttr) {
+                              Board board, HttpSession session) {
 
         boolean result = bServ.insertFile(files, board, session);
         return result;
@@ -97,8 +96,8 @@ public class BoardController {
 
     @PostMapping("/board/file/update")
     @ResponseBody
-    public boolean updateBoardFile(@RequestPart List<MultipartFile> files,HttpSession session, Board board){
-        boolean result = bServ.updateFile(files,session, board);
+    public boolean updateBoardFile(@RequestPart List<MultipartFile> files, Board board, HttpSession session){
+        boolean result = bServ.updateFile(files, board, session);
         return result;
     }
 

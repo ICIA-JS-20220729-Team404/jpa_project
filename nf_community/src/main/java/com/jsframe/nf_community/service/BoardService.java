@@ -69,7 +69,7 @@ public class BoardService {
             log.info("bno : " + board.getBno());
 
             //파일 업로드를 위한 메소드
-            fileUpLoad(files, session, board);
+            fileUpLoad(files, board, session);
 
             msg = "저장 성공";
             view = "redirect:/";
@@ -116,7 +116,7 @@ public class BoardService {
 //            member.getMid();
             Member member = mRepo.findMemberByMid("goguma");
             //파일 업로드를 위한 메소드
-            fileUpLoad(files, session, board);
+            fileUpLoad(files, board, session);
             result = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,7 +125,7 @@ public class BoardService {
         return result;
     }
 
-    private void fileUpLoad(List<MultipartFile> files, HttpSession session, Board board)
+    private void fileUpLoad(List<MultipartFile> files, Board board, HttpSession session)
             throws Exception{
         log.info("fileUpLoad()");
         String realPath = session.getServletContext().getRealPath("/");
@@ -164,6 +164,14 @@ public class BoardService {
         return bRepo.findById(bno).get();
     }
 
+    private void deleteFile(String filePath) {
+        File file = new File(filePath);
+        //파일이 있으면 삭제
+        if(file.exists()) {
+            file.delete();
+        }
+    }
+
     public boolean deleteBoard(long bno, HttpSession session) {
         boolean result = false;
         try {
@@ -173,11 +181,7 @@ public class BoardService {
             realPath += "upload\\";
             //파일 삭제
             for(BoardFile bf : bfList){
-                String delPath = realPath + bf.getBfsysname();
-                File file = new File(delPath);
-                if(file.exists()){
-                    file.delete();//파일이 있으면 삭제
-                }
+                deleteFile(realPath + bf.getBfsysname());
             }
 
             bfRepo.deleteByBfbid(board);
@@ -234,12 +238,12 @@ public class BoardService {
         return result;
     }
 
-    public boolean updateFile(List<MultipartFile> files, HttpSession session, Board board) {
+    public boolean updateFile(List<MultipartFile> files, Board board, HttpSession session) {
         log.info("updateBoard()");
         boolean result = false;
 
             try {
-                fileUpLoad(files, session, board);
+                fileUpLoad(files, board, session);
                 result = true;
             } catch (Exception e) {
                 e.printStackTrace();
