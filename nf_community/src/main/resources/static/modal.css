@@ -1,5 +1,5 @@
 .modal, .join {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 
@@ -16,7 +16,7 @@
 }
 
 .modal_body,.join_body {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
 
