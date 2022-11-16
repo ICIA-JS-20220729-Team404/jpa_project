@@ -9,6 +9,7 @@
       <col style="width: 5%">
       <col style="width: 50%">
       <col style="width: 10%">
+      <col style="width: 10%">
       <col style="width: 20%">
     </colgroup>
     <thead>
@@ -16,6 +17,7 @@
         <th>번호</th>
         <th>제목</th>
         <th>작성자</th>
+        <th>조회수</th>
         <th>날짜</th>
       </tr>
     </thead>
@@ -35,10 +37,6 @@
       $("#board_table_body").append($("<div>").addClass("non-content").html("게시글 목록 요청 에러"));
       return;
     }
-    if (boardPage.boardList.length == 0) {
-      $("#board_table_body").append($("<div>").addClass("non-content").html("글이 없습니다"));
-      return;
-    }
     // 게시글 테이블 생성
     for (let i=0; i<boardPage.numList; i++) {
       let board = boardPage.boardList[i];
@@ -56,6 +54,13 @@
                   $("#bcontent").html(board.bcontent);
                   $("#bdate").html(board.bdate.replace('T', ' ').substring(0, 19));
                   $("#bno").val(board.bno);
+                  $.ajax({
+                    url: "/board/detail",
+                    type: "get",
+                    data: {"bno": board.bno},
+                    success: function (result) {
+                    }
+                  });
                   $.ajax({
                     url: "/board/file/list",
                     type: "get",
@@ -89,6 +94,8 @@
         }));
         // 게시글 작성자
         $tr.append($("<td>").html(board.bid.mid));
+        // 조회수
+        $tr.append($("<td>").html(board.bcount));
         // 게시글 작성날짜
         $tr.append($("<td>").html(board.bdate.replace('T', ' ').substring(0, 19)));
       } else {
