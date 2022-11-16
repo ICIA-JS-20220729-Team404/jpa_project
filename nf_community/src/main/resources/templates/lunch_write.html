@@ -1,0 +1,54 @@
+<style>
+    #lunch_content {
+        width: 500px;
+        height: 300px;
+    }
+</style>
+
+<div id="popupLunchWriteView" class="popupDetailMainView">
+    <div class="popupDetailSubView">
+        <h3>메뉴 작성</h3>
+        <br>
+        <textarea id="lunch_content" placeholder="내용"></textarea>
+        <br>
+        <p><button id="lunch_writebtn">작성</button></p>
+    </div>
+</div>
+<script th:inline="javascript">
+    //팝업 닫기 함수
+    let closeLunchWritePopup = function () {
+        $("#popupLunchWriteView").toggleClass('show');
+        const attrShow = $("#popupLunchWriteView").attr('show');
+        if (attrShow === undefined || attrShow === false) {
+            $("body").css("overflow", "auto");
+        }
+        requestBoardPage($("#currentPage").html());
+    };
+    // 팝업 클릭 이벤트 처리
+    $("#popupLunchWriteView").click( (event) => {
+        if (event.target === $("#popupLunchWriteView")[0]) {
+            closeLunchWritePopup();
+        }
+    });
+
+    //작성 버튼 클릭 이벤트 처리
+
+    $("#lunch_writebtn").click(function(){
+        $.ajax({
+            url : "/lunch/write",
+            type : "POST",
+            data : {"lcontent": $("#lunch_content").val()},
+            success : function (result){
+                alert(result);
+            },
+            error:function (error){
+                alert(error);
+            },
+            complete : function(){
+                closeLunchWritePopup();
+            }
+        });
+    });
+
+
+</script>

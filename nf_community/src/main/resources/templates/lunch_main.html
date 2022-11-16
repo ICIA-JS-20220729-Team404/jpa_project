@@ -1,0 +1,65 @@
+<section id="board_section" class="content">
+  <hr>
+  <div id="content--title--div">
+    <h2 class="content--title">점심 파티 구함!</h2>
+    <button id="createMenuBtn" type="button">메뉴 생성</button>
+  </div>
+  <table id="lunch_board">
+    <colgroup>
+      <col style="width: 5%">
+      <col style="width: 50%">
+      <col style="width: 10%">
+      <col style="width: 20%">
+    </colgroup>
+    <thead>
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>조회수</th>
+    </tr>
+    </thead>
+    <tbody id="lunch_table_body">
+    </tbody>
+  </table>
+</section>
+<script th:inline="javascript">
+
+    $.ajax({
+      url : "/lunch/list",
+      method : "get",
+      contentType:'application/json;charset=utf-8',
+      dataType : "json",
+
+      error:function(error,status,msg){
+        alert("상태코드" + status + "에러메시지" + msg);
+      },
+      success:listAll(),
+    });
+
+  function listAll(result) {
+    $('#lunch_table_body').empty();
+    $.each(result, function (item,index){
+      $("<tr>")
+              .append($("<td>").html(index.lno))
+              .append($("<td>").html(index.lcontent))
+              .append($("<td>").html(index.lid)
+              .append($("<td>").html(index.lcount)
+                      .appendTo('#lunch_table_body')))
+
+    });
+  }
+
+
+  // 글쓰기 버튼 클릭 이벤트 처리
+  $("#createMenuBtn").click(function (){
+    $("#popupLunchWriteView").toggleClass('show');
+    const attrShow = $("#popupLunchWriteView").attr('show');
+    if(attrShow !== "undefined" && attrShow !== false) {
+      $('body').css('overflow','hidden');
+      $('#lunch_content').val("");
+    }
+  });
+
+
+</script>

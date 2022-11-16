@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "lunchtbl")
@@ -20,6 +21,16 @@ public class Lunch {
     @Column(nullable = false, length = 50)
     private String lcontent;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer lcount;
+
+
+//    @Transient
+//    private int numList;
+//    @Transient
+//    private int currentPage;
+//    @Transient
+//    private int totalPage;
+//    @Transient
+//    private List<Lunch> lunchList;
 }

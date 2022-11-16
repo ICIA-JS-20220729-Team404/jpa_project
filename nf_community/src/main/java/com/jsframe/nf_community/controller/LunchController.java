@@ -28,11 +28,19 @@ public class LunchController {
 
     }
     // 점심 메뉴 전체 출력(List)
-    @PostMapping("/lunch/list")
+    @GetMapping("/lunch/list")
     @ResponseBody
-    public List<Lunch> LunchList(Lunch lunch, HttpSession session){
-        return lServ.getLunchList(lunch, session);
+    public List<Lunch> LunchList(){
+        return lServ.getLunchList();
     }
+
+//    @GetMapping("/lunch/page")
+//    @ResponseBody
+//    public Lunch getLunchPage(Integer pageNum){
+//        Lunch lp = lServ.getLunchPage(pageNum);
+//        log.info("lp" + lp.getCurrentPage());
+//        return lp;
+//    }
 
     // 점심 메뉴 디테일 출력(Detail)
     @GetMapping("/lunch/detail")
