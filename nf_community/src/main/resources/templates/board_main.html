@@ -64,11 +64,21 @@
                       $("#fileList").html("");
                       for (file of fileList) {
                         console.log(file.bforiname);
-                        $("#fileList").append($("<p>").append($("<a>").html(file.bforiname)
-                                .attr("href", "/board/file/download?bfnum="+file.bfnum)));
+                        let $fileLine = $("<div>").addClass("fileList");
+                        $fileLine.append($("<a>").html(file.bforiname).attr("href", "/board/file/download?bfnum="+file.bfnum));
+                        let $checkboxDiv = $("<div>");
+                        $checkboxDiv.append($("<span>").html("삭제"));
+                        $checkboxDiv.append($("<input>").attr("disabled", true).prop({
+                          name: "deleteFileCheck",
+                          value: file.bfnum,
+                          type: "checkbox"
+                        }));
+                        $fileLine.append($checkboxDiv);
+                        $("#fileList").append($fileLine);
                       }
                     },
                     error: function (error) {
+                      alert(error)
                     }
                   });
                   $("#popupBoardDetailView").toggleClass('show');

@@ -96,8 +96,8 @@ public class BoardController {
 
     @PostMapping("/board/file/update")
     @ResponseBody
-    public boolean updateBoardFile(@RequestPart List<MultipartFile> files, Board board, HttpSession session){
-        boolean result = bServ.updateFile(files, board, session);
+    public boolean updateBoardFile(@RequestPart List<MultipartFile> files, long bno, HttpSession session){
+        boolean result = bServ.updateFile(files, bno, session);
         return result;
     }
 
@@ -118,6 +118,13 @@ public class BoardController {
         BoardFile bf = bServ.getBoardFile(bfnum);
         ResponseEntity<Resource> resp = bServ.fileDownload(bf, session);
         return resp;
+    }
+
+    @GetMapping("/board/file/delete")
+    @ResponseBody
+    public boolean deleteBoardFile(long bfnum) {
+        bServ.deleteBoardFile(bfnum);
+        return true;
     }
 }
 

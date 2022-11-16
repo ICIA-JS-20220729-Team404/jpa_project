@@ -177,13 +177,11 @@ public class BoardService {
         try {
             Board board = bRepo.findById(bno).get();
             List<BoardFile> bfList = bfRepo.findByBfbid(board);
-            String realPath = session.getServletContext().getRealPath("/");
-            realPath += "upload\\";
+            String realPath = session.getServletContext().getRealPath("/") + "upload\\";
             //파일 삭제
             for(BoardFile bf : bfList){
                 deleteFile(realPath + bf.getBfsysname());
             }
-
             bfRepo.deleteByBfbid(board);
             bRepo.deleteById(bno);
             result = true;
@@ -238,11 +236,20 @@ public class BoardService {
         return result;
     }
 
-    public boolean updateFile(List<MultipartFile> files, Board board, HttpSession session) {
+    public boolean updateFile(List<MultipartFile> files, long bno, HttpSession session) {
         log.info("updateBoard()");
         boolean result = false;
 
             try {
+                // 기존에 저장된 파일 삭제
+                Board board = bRepo.findById(bno).get();
+                List<BoardFile> bfList = bfRepo.findByBfbid(board);
+                String realPath = session.getServletContext().getRealPath("/") + "upload\\";
+                //파일 삭제
+                for(BoardFile bf : bfList){
+                    deleteFile(realPath + bf.getBfsysname());
+                }
+                // 새로운 파일로 저장
                 fileUpLoad(files, board, session);
                 result = true;
             } catch (Exception e) {
@@ -264,11 +271,7 @@ public class BoardService {
             //파일 저장 경로 구하기
             String realpath = session.getServletContext().getRealPath("/");
             realpath += "upload\\" + bfile.getBfsysname();
-
-            log.info(realpath);
-
-            InputStreamResource fResource =
-                    new InputStreamResource(new FileInputStream(realpath));
+            InputStreamResource fResource = new InputStreamResource(new FileInputStream(realpath));
 
             //파일명이 한글인 경우의 처리(UTF-8로 인코딩 처리)
             String fileName = URLEncoder.encode(bfile.getBforiname(), "UTF-8");
@@ -283,5 +286,11 @@ public class BoardService {
 
     public BoardFile getBoardFile(long bfnum) {
         return bfRepo.findById(bfnum).get();
+    }
+
+    public void deleteBoardFile(long bfnum) {
+        BoardFile bf = bfRepo.findById(bfnum).get();
+        deleteFile(bf.getBfsysname());
+        bfRepo.deleteById(bfnum);
     }
 }
