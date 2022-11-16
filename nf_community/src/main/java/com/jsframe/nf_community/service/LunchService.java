@@ -30,6 +30,7 @@ public class LunchService {
             Member member = mRepo.findMemberByMid("goguma");
 
             lunch.setLid(member);
+            lunch.setLcount(0);
             lRepo.save(lunch);
             result = true;
         }catch (Exception e) {
@@ -46,7 +47,6 @@ public class LunchService {
 
     public Lunch getLunch(long lno) {
         log.info("getLunch()");
-        long result = 0;
         try{
             Lunch lunch = lRepo.findById(lno).get();
             lunch.setLcount(lunch.getLcount() +1);

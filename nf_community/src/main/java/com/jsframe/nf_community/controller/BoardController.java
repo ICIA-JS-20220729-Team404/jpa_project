@@ -78,6 +78,7 @@ public class BoardController {
     @GetMapping("/board/detail")
     @ResponseBody
     public Board detailBoard(long bno) {
+
         return bServ.getBoard(bno);
     }
 

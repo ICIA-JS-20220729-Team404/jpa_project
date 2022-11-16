@@ -65,6 +65,7 @@ public class BoardService {
             Member member = new Member();
             member.setMid("goguma");
             board.setBid(member);
+            board.setBcount(0);
             bRepo.save(board);
             log.info("bno : " + board.getBno());
 
@@ -95,8 +96,8 @@ public class BoardService {
             log.info(board.getBtitle());
             log.info(board.getBcontent());
             log.info(member.getMid());
-
             board.setBid(member);
+            board.setBcount(0);
             bRepo.save(board);
             log.info("bno : " + board.getBno());
             result = board.getBno();
@@ -161,6 +162,13 @@ public class BoardService {
 
     public Board getBoard(long bno) {
         log.info("getBoard()");
+        try{
+            Board board = bRepo.findById(bno).get();
+            board.setBcount(board.getBcount() +1);
+            bRepo.save(board);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         return bRepo.findById(bno).get();
     }
 

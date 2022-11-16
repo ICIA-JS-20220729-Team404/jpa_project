@@ -1,6 +1,7 @@
 package com.jsframe.nf_community.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -19,6 +20,6 @@ public class Lunch {
     @Column(nullable = false, length = 50)
     private String lcontent;
 
-    @Column(nullable = true, length = 10)
-    private int lcount;
+    @Column(nullable = false)
+    private Integer lcount;
 }

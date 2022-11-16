@@ -1,6 +1,7 @@
 package com.jsframe.nf_community.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -26,4 +27,7 @@ public class Board {
     @CreationTimestamp
     @Column
     private Timestamp bdate;
+
+    @Column(nullable = false)
+    private Integer bcount;
 }
