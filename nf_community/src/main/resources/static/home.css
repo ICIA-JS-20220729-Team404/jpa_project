@@ -86,12 +86,11 @@ header:not(.active) .app-header--utils a:hover {
     color: #fff;
 }
 
-.content {
+.banner, .content {
     padding: 25px;
-    min-height: 400px;
 }
 
-.content {
+.second {
     padding: 25px;
     /*background: #fafaff;*/
 }
