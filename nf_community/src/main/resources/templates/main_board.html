@@ -82,7 +82,7 @@
         // 게시글 작성날짜
         $tr.append($("<td>").html(board.bdate.replace('T', ' ').substring(0, 19)));
       } else {
-        $tr.append($("<td>").html("---"));
+        $tr.append($("<td>").html("-"));
       }
       $("#board_table_body").append($tr);
     }
@@ -119,6 +119,9 @@
     const attrShow = $("#popupBoardWriteView").attr('show');
     if (attrShow !== "undefined" && attrShow !== false) {
       $("body").css("overflow", "hidden");
+      $("#bw_title").val("");
+      $("#bw_content").val("");
+      $("#bw_file").val("");
     }
   });
   // 게시글 초기화
