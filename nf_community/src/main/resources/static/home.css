@@ -150,7 +150,7 @@ td {
 
 footer {
     margin: 0 auto;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .footer-nav {
@@ -171,10 +171,10 @@ footer {
 .footer-info {
     border-top: 3px dashed #eee;
     margin-top: 1vw;
-    padding: 3vw 10%;
+    padding: 2vw 5%;
     display: flex;
     justify-content: space-between;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.7);
 }
