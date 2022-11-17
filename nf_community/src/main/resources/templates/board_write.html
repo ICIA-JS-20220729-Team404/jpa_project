@@ -1,22 +1,31 @@
 <style>
   #bw_title {
-    width: 500px;
+    width: 450px;
   }
   #bw_content {
     width: 500px;
     height: 300px;
   }
+  #bw_writebtn{
+    border-radius: 7px;
+    background-color: black;
+    color: white;
+  }
 </style>
 
 <div id="popupBoardWriteView" class="popupDetailMainView">
   <div class="popupDetailSubView">
-    <h3>게시글 작성</h3>
+    <p style="text-align: center; font-size: 20px" ><b>게시글 작성</b></p>
     <br>
-    <p><input id="bw_title" type="text" placeholder="제목"></p>
-    <textarea id="bw_content" placeholder="내용"></textarea>
+    <div style="margin: 0 0 10px 0">
+    <p><input style="margin-left: 20px" id="bw_title" type="text" placeholder="제목"></p>
+    </div>
+    <textarea style="padding: 15px; font-size: 15px" id="bw_content" placeholder="내용"></textarea>
     <br>
     <input type="file" name="bw_files" id="bw_file" multiple>
+    <div style="text-align: center; margin-top: 10px;">
     <p><button id="bw_writebtn">작성</button></p>
+    </div>
   </div>
 </div>
 
