@@ -206,21 +206,21 @@ footer {
     border: 1px solid lightgray;
 }
 
-#lunch_section {
+#anonymous_section {
     width: 50%;
 }
 
-#lunch_table_body > tr {
+#anonymous_table_body > tr {
     margin-left: 20px;
     margin-top: 10px;
 }
 
-#lunch_table_body > tr > td {
+#anonymous_table_body > tr > td {
     padding: 0 0 10px 20px;
     text-align: left;
 }
 
-#lunch_table_div {
+#anonymous_table_div {
     overflow: auto;
     height: 200px;
 }

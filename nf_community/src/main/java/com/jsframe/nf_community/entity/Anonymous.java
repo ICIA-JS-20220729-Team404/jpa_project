@@ -13,7 +13,7 @@ public class Anonymous {
     private long ano;
 
     @ManyToOne
-    @JoinColumn(name = "lid")
+    @JoinColumn(name = "aid")
     private Member aid;
 
     @Column(nullable = false, length = 50)

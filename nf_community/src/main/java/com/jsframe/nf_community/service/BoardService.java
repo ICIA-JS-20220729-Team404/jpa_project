@@ -1,9 +1,6 @@
 package com.jsframe.nf_community.service;
 
-import com.jsframe.nf_community.entity.Board;
-import com.jsframe.nf_community.entity.BoardFile;
-import com.jsframe.nf_community.entity.BoardPage;
-import com.jsframe.nf_community.entity.Member;
+import com.jsframe.nf_community.entity.*;
 import com.jsframe.nf_community.repository.BoardFileRepository;
 import com.jsframe.nf_community.repository.BoardRepository;
 import com.jsframe.nf_community.repository.MemberRepository;
@@ -52,6 +49,8 @@ public class BoardService {
         Member member = (Member)session.getAttribute("mem");
         if (member == null) return result;
         try {
+            log.info(member.getMid());
+            log.info(member.getMname());
             board.setBid(member);
             board.setBcount(0);
             bRepo.save(board);
@@ -63,10 +62,11 @@ public class BoardService {
         return result;
     }
 
-    public boolean insertFile(List<MultipartFile> files, Board board, HttpSession session) {
+    public boolean insertFile(List<MultipartFile> files, long bno, HttpSession session) {
         log.info("insertFile()");
         boolean result = false;
         try {
+            Board board = bRepo.findById(bno).get();
             fileUpLoad(files, board, session);
             result = true;
         } catch (Exception e) {
@@ -124,10 +124,16 @@ public class BoardService {
         }
     }
 
-    public boolean deleteBoard(long bno, HttpSession session) {
-        boolean result = false;
+    public ReturnMsg deleteBoard(long bno, HttpSession session) {
+        ReturnMsg rm = new ReturnMsg();
         try {
+            Member member = (Member)session.getAttribute("mem");
             Board board = bRepo.findById(bno).get();
+            if (member.getMid().equals(board.getBid().getMid()) == false) {
+                rm.setFlag(false);
+                rm.setMsg("작성자가 아닙니다!");
+                return rm;
+            }
             List<BoardFile> bfList = bfRepo.findByBfbid(board);
             String realPath = session.getServletContext().getRealPath("/") + "upload\\";
             //파일 삭제
@@ -136,13 +142,15 @@ public class BoardService {
             }
             bfRepo.deleteByBfbid(board);
             bRepo.deleteById(bno);
-            result = true;
+            rm.setFlag(true);
+            rm.setMsg("삭제에 성공했습니다!");
         }
         catch (Exception e) {
-            result = false;
+            rm.setFlag(false);
+            rm.setMsg("삭제에 실패했습니다!");
             log.info(e.getMessage());
         }
-        return result;
+        return rm;
     }
 
     public List<Board> getBoardList() {
@@ -170,46 +178,29 @@ public class BoardService {
         return bp;
     }
 
-    public long updateBoard(HttpSession session, Board board) {
+    public ReturnMsg updateBoard(HttpSession session, Board board) {
         log.info("updateBoard()");
-        long result = -1;
-
+        ReturnMsg rm = new ReturnMsg();
+        rm.setCode(-1);
         try {
             Member member = (Member)session.getAttribute("mem");
-            board.setBid(member);
-            board.setBdate(Timestamp.valueOf(LocalDateTime.now()));
-            bRepo.save(board);
-            result = board.getBno();
+            Board bd = bRepo.findById(board.getBno()).get();
+            if (member.getMid().equals(bd.getBid().getMid()) == false) {
+                rm.setCode(-1);
+                rm.setMsg("작성자가 아닙니다!");
+                return rm;
+            }
+            bd.setBcontent(board.getBcontent());
+            bd.setBdate(Timestamp.valueOf(LocalDateTime.now()));
+            bRepo.save(bd);
+            rm.setCode(board.getBno());
+            rm.setMsg("수정에 성공했습니다!");
         } catch (Exception e) {
             e.printStackTrace();
-            result = -1;
+            rm.setCode(-1);
+            rm.setMsg("수정에 실패했습니다!");
         }
-
-        return result;
-    }
-
-    public boolean updateFile(List<MultipartFile> files, long bno, HttpSession session) {
-        log.info("updateBoard()");
-        boolean result = false;
-
-            try {
-                // 기존에 저장된 파일 삭제
-                Board board = bRepo.findById(bno).get();
-                List<BoardFile> bfList = bfRepo.findByBfbid(board);
-                String realPath = session.getServletContext().getRealPath("/") + "upload\\";
-                //파일 삭제
-                for(BoardFile bf : bfList){
-                    deleteFile(realPath + bf.getBfsysname());
-                }
-                // 새로운 파일로 저장
-                fileUpLoad(files, board, session);
-                result = true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                result = false;
-            }
-
-        return result;
+        return rm;
     }
 
     public List<BoardFile> getFileList(long bno) {

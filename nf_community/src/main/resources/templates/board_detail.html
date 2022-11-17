@@ -163,11 +163,11 @@
         "bcontent": $("#bcontent").val()
       },
       success: function (result){
-        if (result) {
-          alert("변경사항이 적용 되었습니다.");
+        if (result.code != -1) {
           fileDeleteFunc();
           fileUpdateFunc($("#bno").val());
         }
+        alert(result.msg);
       },
       error: function (error){
         alert(error);
@@ -182,9 +182,7 @@
       type: "GET",
       data: {"bno": $("#bno").val()},
       success: function (result){
-        if (result) {
-          alert("삭제 되었습니다.");
-        }
+        alert(result.msg);
       },
       error: function (error){
         alert(error);

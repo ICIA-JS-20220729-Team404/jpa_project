@@ -50,14 +50,15 @@
     let fileFormData = new FormData();
     let filesData = $("#bw_file")[0].files;
     if (filesData.length === 0) {
-      console.log("업로드할 파일 없음");
       closeBoardWritePopup();
       return;
     }
     for (let i=0; i<filesData.length; i++) {
+      console.log(filesData[i])
       fileFormData.append("files", filesData[i]);
     }
     fileFormData.append("bno", bno);
+
     $.ajax({
       url : "/board/file/write",
       type : "POST",
@@ -88,10 +89,8 @@
         "bcontent": $("#bw_content").val()
       },
       success: function (result){
-        if (result) {
-          alert("작성되었습니다.");
-          fileUpload(result);
-        }
+          alert(result.msg);
+          fileUpload(result.code);
       },
       error: function (error){
         alert(error);

@@ -36,7 +36,6 @@ public class TiplinkService {
     }
 
     public List<Tiplink> getList() {
-        log.info("getLunchList()");
         return tRepo.findAll(Sort.by(Sort.Direction.DESC, "tno"));
     }
 }
