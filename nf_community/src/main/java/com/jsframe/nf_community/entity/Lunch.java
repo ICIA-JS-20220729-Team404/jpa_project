@@ -25,12 +25,4 @@ public class Lunch {
     private Integer lcount;
 
 
-//    @Transient
-//    private int numList;
-//    @Transient
-//    private int currentPage;
-//    @Transient
-//    private int totalPage;
-//    @Transient
-//    private List<Lunch> lunchList;
 }

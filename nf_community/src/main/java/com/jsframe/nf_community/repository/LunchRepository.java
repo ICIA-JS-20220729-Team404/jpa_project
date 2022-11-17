@@ -10,6 +10,5 @@ import java.util.List;
 public interface LunchRepository extends CrudRepository<Lunch, Long> {
     List<Lunch> findAll();
 
-//    Page<Lunch> findByLnoGreaterThan(long lno, Pageable pb);
 
 }

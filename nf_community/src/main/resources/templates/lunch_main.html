@@ -25,6 +25,9 @@
 </section>
 <script th:inline="javascript">
 
+  listUpdate()
+  function listUpdate(){
+
     $.ajax({
       url : "/lunch/list",
       method : "get",
@@ -34,18 +37,22 @@
       error:function(error,status,msg){
         alert("상태코드" + status + "에러메시지" + msg);
       },
-      success:listAll(),
+      success:function (result) {
+        console.log(result);
+        listAll(result);
+      }
     });
+  }
 
   function listAll(result) {
     $('#lunch_table_body').empty();
-    $.each(result, function (item,index){
+    $.each(result, function (index, item){
       $("<tr>")
-              .append($("<td>").html(index.lno))
-              .append($("<td>").html(index.lcontent))
-              .append($("<td>").html(index.lid)
-              .append($("<td>").html(index.lcount)
-                      .appendTo('#lunch_table_body')))
+              .append($("<td>").html(item.lno))
+              .append($("<td>").html(item.lcontent))
+              .append($("<td>").html(item.lid.mid))
+              .append($("<td>").html(item.lcount))
+              .appendTo($('#lunch_table_body'))
 
     });
   }

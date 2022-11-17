@@ -31,6 +31,9 @@ public class LunchService {
         boolean result = false;
         try {
             Member member = (Member) session.getAttribute("mem");
+            if(member == null){
+                return false;
+            }
             lunch.setLid(member);
             lunch.setLcount(0);
             lRepo.save(lunch);
@@ -47,25 +50,6 @@ public class LunchService {
         return lRepo.findAll();
     }
 
-//    public Lunch getLunchPage(Integer pageNum) {
-//        log.info("getLunchPage()");
-//        if (pageNum == null) {
-//            pageNum = 1;
-//        }
-//        // 페이징 조건 생성
-//        int listCnt = 5;
-//        Pageable pb = PageRequest.of((pageNum - 1), listCnt, Sort.Direction.DESC, "lno");
-//        Page<Lunch> result = lRepo.findByLnoGreaterThan(0L,pb);
-//
-//        // 페이지 정보 객체 생성
-//        Lunch lp = new Lunch();
-//        lp.setNumList(listCnt);
-//        lp.setCurrentPage(pageNum);
-//        lp.setTotalPage(result.getTotalPages());
-//        lp.setLunchList(result.getContent());
-//
-//        return lp;
-//    }
 
     public Lunch getLunch(long lno) {
         log.info("getLunch()");

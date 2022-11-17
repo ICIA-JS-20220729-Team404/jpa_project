@@ -11,7 +11,9 @@
         <br>
         <textarea id="lunch_content" placeholder="내용"></textarea>
         <br>
-        <p><button id="lunch_writebtn">작성</button></p>
+        <p>
+            <button id="lunch_writebtn">작성</button>
+        </p>
     </div>
 </div>
 <script th:inline="javascript">
@@ -25,7 +27,7 @@
         requestBoardPage($("#currentPage").html());
     };
     // 팝업 클릭 이벤트 처리
-    $("#popupLunchWriteView").click( (event) => {
+    $("#popupLunchWriteView").click((event) => {
         if (event.target === $("#popupLunchWriteView")[0]) {
             closeLunchWritePopup();
         }
@@ -33,18 +35,23 @@
 
     //작성 버튼 클릭 이벤트 처리
 
-    $("#lunch_writebtn").click(function(){
+    $("#lunch_writebtn").click(function () {
         $.ajax({
-            url : "/lunch/write",
-            type : "POST",
-            data : {"lcontent": $("#lunch_content").val()},
-            success : function (result){
-                alert(result);
+            url: "/lunch/write",
+            type: "POST",
+            data: {"lcontent": $("#lunch_content").val()},
+            success: function (result) {
+                if (result == true) {
+                    alert("작성 완료");
+                    listUpdate();
+                } else {
+                    alert("로그인해주세요~");
+                }
             },
-            error:function (error){
+            error: function (error) {
                 alert(error);
             },
-            complete : function(){
+            complete: function () {
                 closeLunchWritePopup();
             }
         });
