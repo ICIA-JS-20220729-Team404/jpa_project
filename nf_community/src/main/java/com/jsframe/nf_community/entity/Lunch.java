@@ -23,6 +23,4 @@ public class Lunch {
 
     @Column(nullable = true)
     private Integer lcount;
-
-
 }

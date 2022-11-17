@@ -23,9 +23,6 @@ public class LunchService {
     @Autowired
     private LunchRepository lRepo;
 
-    @Autowired
-    private MemberRepository mRepo;
-
     public boolean insertLunch(Lunch lunch, HttpSession session) {
         log.info("insertLunch()");
         boolean result = false;
@@ -47,9 +44,8 @@ public class LunchService {
 
     public List<Lunch> getLunchList() {
         log.info("getLunchList()");
-        return lRepo.findAll();
+        return lRepo.findAll(Sort.by(Sort.Direction.DESC, "lno"));
     }
-
 
     public Lunch getLunch(long lno) {
         log.info("getLunch()");

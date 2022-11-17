@@ -205,3 +205,26 @@ footer {
     border-radius: 7px;
     border: 1px solid lightgray;
 }
+
+#lunch_section {
+    width: 50%;
+}
+
+/*#lunch_board {*/
+/*    line-height: normal;*/
+/*}*/
+
+#lunch_table_body > tr {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#lunch_table_body > tr > td {
+    padding: 0 0 10px 20px;
+    text-align: left;
+}
+
+#lunch_table_div {
+    overflow: auto;
+    height: 200px;
+}
