@@ -2,6 +2,7 @@ package com.jsframe.nf_community.controller;
 
 import com.jsframe.nf_community.entity.Member;
 import com.jsframe.nf_community.service.MemberService;
+import com.sun.net.httpserver.HttpsServer;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,13 @@ public class MemberController {
         session.setAttribute("mem", member);
         boolean result = mServ.loginProc(member, session);
         return result;
+    }
+
+    @GetMapping("/member/logout")
+    @ResponseBody
+    public boolean logout(HttpSession session) {
+        session.removeAttribute("mem");
+        return true;
     }
 
     @PostMapping("/member/join")

@@ -22,17 +22,30 @@
     const btnOpenPopup = document.querySelector('.btn-open-popup');
 
     btnOpenPopup.addEventListener('click', () => {
-        modal.classList.toggle('show');
-
-        if (modal.classList.contains('show')) {
-            body.style.overflow = 'hidden';
+        console.log(btnOpenPopup.innerHTML);
+        if (btnOpenPopup.innerHTML === "Sign In") {
+            // 로그인 모달 출력
+            modal.classList.toggle('show');
+            if (modal.classList.contains('show')) {
+                body.style.overflow = 'hidden';
+            }
+        } else {
+            // 로그아웃
+            console.log("logout");
+            $.ajax({
+                url: "/member/logout",
+                type: "get",
+                async: false,
+                success: function (result) {
+                    btnOpenPopup.innerHTML = "Sign In";
+                }
+            });
         }
     });
 
     modal.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.classList.toggle('show');
-
             if (!modal.classList.contains('show')) {
                 body.style.overflow = 'auto';
             }
@@ -42,18 +55,31 @@
   $("#loginbtn").click(function (){
       // form 데이터를 가져와 직렬화 한 후 전송
       const formData = $("#loginFrm").serialize();
-      console.log(formData);
 
       $.ajax({
           url : "/member/login",
           type : "POST",
           data : formData,
           success : function (result){
-              alert(result);
+              if (result) {
+                  alert("로그인 성공");
+                  $("#signin_btn").html("Sign Out");
+              } else {
+                  alert("로그인 실패");
+              }
+              modal.classList.toggle('show');
+              if (!modal.classList.contains('show')) {
+                  body.style.overflow = 'auto';
+              }
           },
           error : function (error){
-              alert("전송 실패");
-              console.log(error);
+              alert(error);
+              if (event.target === modal) {
+                  modal.classList.toggle('show');
+                  if (!modal.classList.contains('show')) {
+                      body.style.overflow = 'auto';
+                  }
+              }
           }
       })
   });
