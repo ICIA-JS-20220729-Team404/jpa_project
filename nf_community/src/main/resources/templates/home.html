@@ -13,7 +13,7 @@
 <header>
     <div class="app-header">
         <div class="app-header--main">
-            <h3 class="logo">404 S.T.O.R.Y</h3>
+            <div class="moveTopBtn"><h3 class="logo">404 S.T.O.R.Y<h3></div>
 <!--            <nav>-->
 <!--                <ul class="gnb">-->
 <!--                    <li>Home</li>-->
@@ -88,6 +88,13 @@
             });
         };
     };
+
+    const $topBtn = document.querySelector(".moveTopBtn");
+
+    // 버튼 클릭 시 맨 위로 이동
+    $topBtn.onclick = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     initFunc();
 </script>
 </html>

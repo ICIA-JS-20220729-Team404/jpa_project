@@ -201,7 +201,7 @@ footer {
     border: 1px solid lightgray;
 }
 
-#createMenuBtn{
+#createMenuBtn, #create_linkbtn{
     border-radius: 7px;
     border: 1px solid lightgray;
 }
@@ -248,3 +248,4 @@ footer {
     display: flex;
     justify-content: space-around;
 }
+
