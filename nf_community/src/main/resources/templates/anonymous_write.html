@@ -3,17 +3,23 @@
         width: 500px;
         height: 300px;
     }
+
+    #anonymous_writebtn{
+        border-radius: 7px;
+        background-color: black;
+        color: white;
+    }
 </style>
 
 <div id="popupAnonymousWriteView" class="popupDetailMainView">
     <div class="popupDetailSubView">
-        <h3>익명으로 한 마디!</h3>
+        <p style="font-size: 20px; text-align: center;"><b>익명으로 한 마디!</b></b></p>
         <br>
-        <textarea id="anonymous_content" placeholder="내용"></textarea>
+        <textarea style="padding: 15px" id="anonymous_content" placeholder="내용"></textarea>
         <br>
-        <p>
-            <button id="anonymous_writebtn">작성</button>
-        </p>
+        <div style="text-align: center; margin-top: 10px;">
+        <p><button id="anonymous_writebtn">작성</button></p>
+        </div>
     </div>
 </div>
 <script th:inline="javascript">
