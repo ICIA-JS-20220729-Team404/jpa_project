@@ -1,0 +1,60 @@
+<style>
+  #tiplink_content {
+    width: 500px;
+  }
+</style>
+
+<div id="popupTiplinkWriteView" class="popupDetailMainView">
+  <div class="popupDetailSubView">
+    <h3>팁 링크</h3>
+    <br>
+    <p><input type="text" id="tiplink_content" placeholder="설명"></p>
+    <p><input type="text" id="tiplink_link" placeholder="link"></p>
+    <br>
+    <p>
+      <button id="tiplink_writebtn">작성</button>
+    </p>
+  </div>
+</div>
+<script th:inline="javascript">
+  //팝업 닫기 함수
+  let closeTiplinkWritePopup = function () {
+    $("#popupTiplinkWriteView").toggleClass('show');
+    const attrShow = $("#popupTiplinkWriteView").attr('show');
+    if (attrShow === undefined || attrShow === false) {
+      $("body").css("overflow", "auto");
+    }
+  };
+  // 팝업 클릭 이벤트 처리
+  $("#popupTiplinkWriteView").click((event) => {
+    if (event.target === $("#popupTiplinkWriteView")[0]) {
+      closeTiplinkWritePopup();
+    }
+  });
+
+  //작성 버튼 클릭 이벤트 처리
+  $("#tiplink_writebtn").click(function () {
+    $.ajax({
+      url: "/tiplink/write",
+      type: "POST",
+      data: {
+        "tlink": $("#tiplink_link").val(),
+        "tcontent": $("#tiplink_content").val()
+      },
+      success: function (result) {
+        if (result == true) {
+          alert("작성 완료");
+          tiplinkUpdate();
+        } else {
+          alert("로그인해주세요~");
+        }
+      },
+      error: function (error) {
+        alert(error);
+      },
+      complete: function () {
+        closeTiplinkWritePopup();
+      }
+    });
+  });
+</script>

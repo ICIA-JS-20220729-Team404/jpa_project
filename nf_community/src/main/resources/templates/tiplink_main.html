@@ -1,0 +1,57 @@
+<section id="tiplink_section" class="content">
+  <hr>
+  <div id="content--title--div">
+    <h2 class="content--title">꿀팁 링크 게시판!</h2>
+    <button id="create_linkbtn" type="button">링크하기</button>
+  </div>
+  <div id="tiplink_table_div">
+    <table id="tiplink_board">
+      <colgroup>
+        <col style="width: 50%">
+        <col style="width: 20%">
+      </colgroup>
+      <tbody id="tiplink_table_body">
+      </tbody>
+    </table>
+  </div>
+</section>
+<script th:inline="javascript">
+
+  tiplinkUpdate()
+  function tiplinkUpdate(){
+
+    $.ajax({
+      url : "/tiplink/list",
+      method : "get",
+      contentType:'application/json;charset=utf-8',
+      dataType : "json",
+
+      error:function(error, status, msg){
+        alert("상태코드" + status + "에러메시지" + msg);
+      },
+      success:function (result) {
+        console.log(result);
+        tiplinkListAll(result);
+      }
+    });
+  }
+
+  function tiplinkListAll(result) {
+    $('#tiplink_table_body').empty();
+    $.each(result, function (index, item){
+      $("<tr>").append($("<td>").append($("<span>").html("[" + item.tcontent + "] "))
+              .append($("<a>").html(item.tlink).attr("href", item.tlink).attr("target", "_blank")))
+              .appendTo($('#tiplink_table_body'));
+    });
+  }
+
+  // 링크 공유 버튼 클릭 이벤트 처리
+  $("#create_linkbtn").click(function (){
+    $("#popupTiplinkWriteView").toggleClass('show');
+    const attrShow = $("#popupTiplinkWriteView").attr('show');
+    if(attrShow !== "undefined" && attrShow !== false) {
+      $('body').css('overflow','hidden');
+      $('#tiplink_content').val("");
+    }
+  });
+</script>
