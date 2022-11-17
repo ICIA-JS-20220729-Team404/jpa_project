@@ -2,18 +2,26 @@
   #tiplink_content {
     width: 500px;
   }
+
+  #tiplink_writebtn{
+    border-radius: 7px;
+    background-color: black;
+    color: white;
+  }
+
+
 </style>
 
 <div id="popupTiplinkWriteView" class="popupDetailMainView">
   <div class="popupDetailSubView">
-    <h3>팁 링크</h3>
+    <p style="font-size: 20px; text-align: center;"><b>Tip! Link</b></b></p>
     <br>
-    <p><input type="text" id="tiplink_content" placeholder="설명"></p>
-    <p><input type="text" id="tiplink_link" placeholder="link"></p>
+    <p><input type="text" id="tiplink_link" placeholder="link" autocomplete="off"></p>
+    <p><input type="text" id="tiplink_content" placeholder="한 줄 설명" autocomplete="off"></p>
     <br>
-    <p>
-      <button id="tiplink_writebtn">작성</button>
-    </p>
+    <div style="text-align: center; margin-top: 10px;">
+    <p><button id="tiplink_writebtn">작성</button></p>
+    </div>
   </div>
 </div>
 <script th:inline="javascript">

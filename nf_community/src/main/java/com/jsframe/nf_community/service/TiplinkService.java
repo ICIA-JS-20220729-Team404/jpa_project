@@ -1,6 +1,5 @@
 package com.jsframe.nf_community.service;
 
-import com.jsframe.nf_community.entity.Lunch;
 import com.jsframe.nf_community.entity.Member;
 import com.jsframe.nf_community.entity.Tiplink;
 import com.jsframe.nf_community.repository.TiplinkRepository;
