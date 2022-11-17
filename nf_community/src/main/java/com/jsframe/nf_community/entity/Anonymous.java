@@ -1,26 +1,21 @@
 package com.jsframe.nf_community.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "lunchtbl")
+@Table(name = "anonymoustbl")
 @Data
-public class Lunch {
+public class Anonymous {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long lno;
+    private long ano;
 
     @ManyToOne
     @JoinColumn(name = "lid")
-    private Member lid;
+    private Member aid;
 
     @Column(nullable = false, length = 50)
-    private String lcontent;
-
-    @Column(nullable = true)
-    private Integer lcount;
+    private String acontent;
 }

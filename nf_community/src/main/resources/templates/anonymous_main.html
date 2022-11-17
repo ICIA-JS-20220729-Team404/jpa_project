@@ -1,16 +1,16 @@
-<section id="lunch_section" class="content">
+<section id="anonymous_section" class="content">
   <hr>
   <div id="content--title--div">
     <h2 class="content--title">익명으로 한 마디!</h2>
     <button id="createMenuBtn" type="button">한마디 하기</button>
   </div>
-  <div id="lunch_table_div">
-      <table id="lunch_board">
+  <div id="anonymous_table_div">
+      <table id="anonymous_board">
         <colgroup>
           <col style="width: 50%">
           <col style="width: 20%">
         </colgroup>
-          <tbody id="lunch_table_body">
+          <tbody id="anonymous_table_body">
           </tbody>
       </table>
   </div>
@@ -21,7 +21,7 @@
   function listUpdate(){
 
     $.ajax({
-      url : "/lunch/list",
+      url : "/anonymous/list",
       method : "get",
       contentType:'application/json;charset=utf-8',
       dataType : "json",
@@ -37,24 +37,21 @@
   }
 
   function listAll(result) {
-    $('#lunch_table_body').empty();
+    $('#anonymous_table_body').empty();
     $.each(result, function (index, item){
       $("<tr>")
-              // .append($("<td>").html(item.lno))
-              .append($("<td>").html("[익명]: " + item.lcontent))
-              // .append($("<td>").html(item.lid.mid))
-              // .append($("<td>").html(item.lcount))
-              .appendTo($('#lunch_table_body'))
+              .append($("<td>").html("[익명]: " + item.acontent))
+              .appendTo($('#anonymous_table_body'))
     });
   }
 
   // 글쓰기 버튼 클릭 이벤트 처리
   $("#createMenuBtn").click(function (){
-    $("#popupLunchWriteView").toggleClass('show');
-    const attrShow = $("#popupLunchWriteView").attr('show');
+    $("#popupAnonymousWriteView").toggleClass('show');
+    const attrShow = $("#popupAnonymousWriteView").attr('show');
     if(attrShow !== "undefined" && attrShow !== false) {
       $('body').css('overflow','hidden');
-      $('#lunch_content').val("");
+      $('#anonymous_content').val("");
     }
   });
 

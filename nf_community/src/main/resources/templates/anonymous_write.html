@@ -1,58 +1,58 @@
 <style>
-    #lunch_content {
+    #anonymous_content {
         width: 500px;
         height: 300px;
     }
 </style>
 
-<div id="popupLunchWriteView" class="popupDetailMainView">
+<div id="popupAnonymousWriteView" class="popupDetailMainView">
     <div class="popupDetailSubView">
-        <h3>메뉴 작성</h3>
+        <h3>익명으로 한 마디!</h3>
         <br>
-        <textarea id="lunch_content" placeholder="내용"></textarea>
+        <textarea id="anonymous_content" placeholder="내용"></textarea>
         <br>
         <p>
-            <button id="lunch_writebtn">작성</button>
+            <button id="anonymous_writebtn">작성</button>
         </p>
     </div>
 </div>
 <script th:inline="javascript">
     //팝업 닫기 함수
-    let closeLunchWritePopup = function () {
-        $("#popupLunchWriteView").toggleClass('show');
-        const attrShow = $("#popupLunchWriteView").attr('show');
+    let closeAnonymousWritePopup = function () {
+        $("#popupAnonymousWriteView").toggleClass('show');
+        const attrShow = $("#popupAnonymousWriteView").attr('show');
         if (attrShow === undefined || attrShow === false) {
             $("body").css("overflow", "auto");
         }
         requestBoardPage($("#currentPage").html());
     };
     // 팝업 클릭 이벤트 처리
-    $("#popupLunchWriteView").click((event) => {
-        if (event.target === $("#popupLunchWriteView")[0]) {
-            closeLunchWritePopup();
+    $("#popupAnonymousWriteView").click((event) => {
+        if (event.target === $("#popupAnonymousWriteView")[0]) {
+            closeAnonymousWritePopup();
         }
     });
 
     //작성 버튼 클릭 이벤트 처리
 
-    $("#lunch_writebtn").click(function () {
+    $("#anonymous_writebtn").click(function () {
         $.ajax({
-            url: "/lunch/write",
+            url: "/anonymous/write",
             type: "POST",
-            data: {"lcontent": $("#lunch_content").val()},
+            data: {"acontent": $("#anonymous_content").val()},
             success: function (result) {
                 if (result == true) {
                     alert("작성 완료");
                     listUpdate();
                 } else {
-                    alert("로그인해주세요~");
+                    alert("로그인이 필요합니다");
                 }
             },
             error: function (error) {
                 alert(error);
             },
             complete: function () {
-                closeLunchWritePopup();
+                closeAnonymousWritePopup();
             }
         });
     });
