@@ -36,51 +36,41 @@ public class BoardController {
     @ResponseBody
     public BoardPage getBoardPage(Integer pageNum) {
         BoardPage bp = bServ.getBoardPage(pageNum);
-        log.info("bp" + bp.getCurrentPage());
         return bp;
     }
 
     @PostMapping("/board/write")
     @ResponseBody
-    public long writeBoard(Board board, HttpSession session, RedirectAttributes rttr) {
-        long result = bServ.insertBoard(board, session);
-        return result;
+    public long writeBoard(Board board, HttpSession session) {
+        if (session.getAttribute("mem") == null) return -1;
+        return bServ.insertBoard(board, session);
     }
 
     @PostMapping("/board/file/write")
     @ResponseBody
-    public boolean writeBoardFile(@RequestPart List<MultipartFile> files,
-                              Board board, HttpSession session) {
-
-        boolean result = bServ.insertFile(files, board, session);
-        return result;
+    public boolean writeBoardFile(@RequestPart List<MultipartFile> files, Board board, HttpSession session) {
+        if (session.getAttribute("mem") == null) return false;
+        return bServ.insertFile(files, board, session);
     }
 
     @GetMapping("/board/detail")
     @ResponseBody
     public Board detailBoard(long bno) {
-
         return bServ.getBoard(bno);
     }
 
     @GetMapping("/board/delete")
     @ResponseBody
     public boolean deleteBoard(long bno, HttpSession session) {
+        if (session.getAttribute("mem") == null) return false;
         return bServ.deleteBoard(bno, session);
     }
 
     @PostMapping("/board/update")
     @ResponseBody
-    public long updateBoard(HttpSession session, Board board){
-        long result = bServ.updateBoard(session, board);
-        return result;
-    }
-
-    @PostMapping("/board/file/update")
-    @ResponseBody
-    public boolean updateBoardFile(@RequestPart List<MultipartFile> files, long bno, HttpSession session){
-        boolean result = bServ.updateFile(files, bno, session);
-        return result;
+    public long updateBoard(HttpSession session, Board board) {
+        if (session.getAttribute("mem") == null) return -1;
+        return bServ.updateBoard(session, board);
     }
 
     @GetMapping("/board/file/list")
@@ -99,7 +89,8 @@ public class BoardController {
 
     @GetMapping("/board/file/delete")
     @ResponseBody
-    public boolean deleteBoardFile(long bfnum) {
+    public boolean deleteBoardFile(long bfnum, HttpSession session) {
+        if (session.getAttribute("mem") == null) return false;
         bServ.deleteBoardFile(bfnum);
         return true;
     }

@@ -49,8 +49,9 @@ public class BoardService {
     public long insertBoard(Board board, HttpSession session) {
         log.info("insertBoard()");
         long result = -1;
+        Member member = (Member)session.getAttribute("mem");
+        if (member == null) return result;
         try {
-            Member member = (Member)session.getAttribute("mem");
             board.setBid(member);
             board.setBcount(0);
             bRepo.save(board);
