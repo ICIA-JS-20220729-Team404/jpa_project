@@ -67,10 +67,10 @@
       data : fileFormData,
       enctype: "multipart/form-data",
       success : function (result){
-        alert(result);
+        // alert(result);
       },
       error : function (error){
-        alert("파일 업로드 실패");
+        alert("파일 업로드에 실패하였습니다.");
         console.log(error);
       },
       complete: function () {
@@ -88,8 +88,10 @@
         "bcontent": $("#bw_content").val()
       },
       success: function (result){
-        alert(result);
-        fileUpload(result);
+        if (result) {
+          alert("작성되었습니다.");
+          fileUpload(result);
+        }
       },
       error: function (error){
         alert(error);

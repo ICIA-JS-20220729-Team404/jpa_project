@@ -125,7 +125,7 @@
       data : fileFormData,
       enctype: "multipart/form-data",
       success : function (result){
-        alert(result);
+        // alert(result)
       },
       error : function (error){
         alert("파일 업로드 실패");
@@ -145,7 +145,7 @@
         async: false,
         data: {"bfnum": $(this).val()},
         success: function (result) {
-          alert(result);
+          // alert(result)
         },
         error: function (result) {
           alert(result);
@@ -163,9 +163,11 @@
         "bcontent": $("#bcontent").val()
       },
       success: function (result){
-        alert(result);
-        fileDeleteFunc();
-        fileUpdateFunc($("#bno").val());
+        if (result) {
+          alert("변경사항이 적용 되었습니다.");
+          fileDeleteFunc();
+          fileUpdateFunc($("#bno").val());
+        }
       },
       error: function (error){
         alert(error);
@@ -180,7 +182,9 @@
       type: "GET",
       data: {"bno": $("#bno").val()},
       success: function (result){
-        alert(result);
+        if (result) {
+          alert("삭제 되었습니다.");
+        }
       },
       error: function (error){
         alert(error);
