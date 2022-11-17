@@ -196,3 +196,12 @@ footer {
     display: flex;
     justify-content: space-between;
 }
+#writeBtn {
+    border-radius: 7px;
+    border: 1px solid lightgray;
+}
+
+#createMenuBtn{
+    border-radius: 7px;
+    border: 1px solid lightgray;
+}

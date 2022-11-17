@@ -72,7 +72,7 @@
                         let $fileLine = $("<div>").addClass("fileList");
                         $fileLine.append($("<a>").html(file.bforiname).attr("href", "/board/file/download?bfnum="+file.bfnum));
                         let $checkboxDiv = $("<div>");
-                        $checkboxDiv.append($("<span>").html("삭제").addClass("deleteFileCheckSpan"));
+                        $checkboxDiv.append($("<span>").html("파일삭제").addClass("deleteFileCheckSpan"));
                         $checkboxDiv.append($("<input>").attr("disabled", true).prop({
                           name: "deleteFileCheck",
                           value: file.bfnum,

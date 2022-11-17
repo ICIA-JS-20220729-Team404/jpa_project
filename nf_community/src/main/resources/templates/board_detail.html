@@ -17,7 +17,7 @@
   .popupDetailSubView {
     width : auto;
     height: auto;
-    padding: 10px;
+    padding: 20px;
     background-color: white;
     box-sizing: border-box;
 
@@ -29,7 +29,7 @@
   }
 
   #btitle {
-    width: 500px;
+    width: 450px;
   }
   #bcontent {
     width: 500px;
@@ -39,18 +39,41 @@
     display: flex;
     justify-content: space-between;
   }
+  .deleteFileCheckSpan{
+    font-size: 13px;
+    color: gray;
+    padding: 5px;
+  }
+  #delBtn{
+    border-radius: 7px;
+    background-color: black;
+    color: white;
+  }
+  #modBtn{
+    border-radius: 7px;
+    border: 1px solid lightgray;
+  }
 </style>
 
 <div id="popupBoardDetailView" class="popupDetailMainView">
   <div class="popupDetailSubView">
-    <p>제목: <input type="text" id="btitle" disabled></p>
-    <p>글쓴이: <span id="writer"></span></p>
-    <p>날짜: <span id="bdate"></span></p>
-    <textarea id="bcontent"></textarea>
+    <p style="font-size: 20px"><b>제목: </b><input type="text" id="btitle" disabled></p>
+    <div style="margin: 10px 0 10px 0; display: flex; justify-content: space-between;">
+    <p><b>글쓴이: </b><span id="writer"></span></p>
+    <p><span style=" font-size:15px; color: gray; " id="bdate"></span></p>
+    </div>
+    <textarea style="padding: 15px" id="bcontent"></textarea>
     <div id="fileList"></div>
+    <div></div>
     <input type="file" name="bd_files" id="bd_file" disabled="true" multiple>
     <input type="hidden" id="bno" value="">
-    <p><button id="modBtn">수정</button><button id="setBtn" disabled>적용</button><button id="delBtn">삭제</button></p>
+    <div style="text-align: center; margin-top: 10px;">
+    <p>
+      <button id="modBtn">수정</button>
+      <button id="setBtn" disabled>적용</button>
+      <button id="delBtn">삭제</button>
+    </p>
+    </div>
   </div>
 </div>
 
